@@ -20,5 +20,7 @@ const FONT = {
     large: 20,
  } 
 
+ 
+
 
   export {COLOR, FONT, SIZE, images,icons};
