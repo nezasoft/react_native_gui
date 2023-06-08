@@ -20,9 +20,14 @@ const Layout = () => {
  }
 
  return (
-    <Stack initialRouteName="home">
+    <Stack initialRouteName="signin">
         <Stack.Screen name="home" />
+        <Stack.Screen name="profile" />
+        <Stack.Screen name="signin" />
+        <Stack.Screen name="signup" />
     </Stack>
+    
+    
  );
 
 };
