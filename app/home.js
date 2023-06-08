@@ -25,7 +25,7 @@ const Home = () =>{
                 headerRight: () =>(
                     <TouchableOpacity style={styles.menuBtnRight} onPress={displayProfile}> <Image  style={styles.iconSize} source={icons.profile} /></TouchableOpacity>
                 ),
-                headerTitle:"Nezasoft Home",
+                headerTitle:"",
                 }}
             />
             <View>
@@ -40,14 +40,14 @@ const Home = () =>{
 const styles = StyleSheet.create({
     headerText : {
         fontSize: SIZE.large,
-        fontFamily: FONT.gladi,
+        fontFamily: FONT.Bold,
         color: COLOR.primary,
         margin:10,
         padding: 10,
     },
     regularText: {
         fontSize: SIZE.small,
-        fontFamily: FONT.coolveRegular,
+        fontFamily: FONT.Regular,
         color: COLOR.secondary,
         margin:10,
         padding: 10,

@@ -9,9 +9,9 @@ const COLOR = {
 };
 
 const FONT = {
-    coolveRegular: "CoolveticaRegular",
-    gladi : "DGladifilthefte ",
-    coolveBold: "CoolveticaBold ",
+    Regular: "DMSansRegular",
+    Bold: "DMSansBold",
+    Medium: "DMSansMedium",
   };
 
  const SIZE = {

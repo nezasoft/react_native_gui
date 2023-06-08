@@ -11,10 +11,9 @@ export const unstable_settings = {
 
 const Layout = () => {
     const [fontsLoaded] = useFonts({
-        JelleeRoman: require('../assets/fonts/Jellee-Roman.ttf'),
-        CoolveticaBold : require('../assets/fonts/coolvetica-compressed-hv.otf'),
-        CoolveticaRegular : require('../assets/fonts/coolvetica-condensed-rg.otf'),
-        Gladifilthefte : require('../assets/fonts/Gladifilthefte.ttf'),
+        DMSansBold: require('../assets/fonts/DMSans-Bold.ttf'),
+        DMSansRegular : require('../assets/fonts/DMSans-Regular.ttf'),
+        DMSansMedium : require('../assets/fonts/DMSans-Medium.ttf'),
     });
  if(!fontsLoaded){
     return null;
