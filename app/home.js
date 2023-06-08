@@ -19,11 +19,15 @@ const Home = () =>{
                 headerShadowVisible: false,
                 headerLeft: () => (
                     <TouchableOpacity style={styles.menuBtnLeft} onPress={displayMenu}>
-                        <Image  style={styles.iconSize} source={icons.stack} />
+                      <Text><Image  style={styles.iconSize} source={icons.stack} /></Text>  
                     </TouchableOpacity>
                 ),
                 headerRight: () =>(
-                    <TouchableOpacity style={styles.menuBtnRight} onPress={displayProfile}> <Image  style={styles.iconSize} source={icons.profile} /></TouchableOpacity>
+                    <TouchableOpacity style={styles.menuBtnRight} onPress={displayProfile}>
+                        <Text>
+                         <Image  style={styles.iconSize} source={icons.profile} />
+                         </Text>
+                    </TouchableOpacity>
                 ),
                 headerTitle:"",
                 }}
@@ -62,14 +66,10 @@ const styles = StyleSheet.create({
 
     },
     menuBtnLeft : {
-        backgroundColor: COLOR.primary,
-        borderRadius: 5,
         padding: 5,
         margin:10,
     },
     menuBtnRight : {
-        backgroundColor: COLOR.primary,
-        borderRadius: 5,
         padding: 5,
         margin:10,
     },
