@@ -5,6 +5,8 @@ import {Stack, useRouter} from "expo-router";
 //import Ionicons from "@expo/vector-icons/Ionicons";
 
 const Home = () =>{
+
+    const userId = localStorage.getItem('user');
     const router = useRouter();
     const displayMenu = () =>{
         router.push('/menu');
@@ -12,6 +14,13 @@ const Home = () =>{
     const displayProfile = () =>{
         router.push('/profile');
     };
+
+    if(userId.length==0){
+        router.push('/signin');
+    }else{
+        router.push('/home');
+
+    }
     return(
         <SafeAreaView styles={{flex:1, backgroundColor: COLOR.primary}}>
             <Stack.Screen  options={{

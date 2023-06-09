@@ -1,65 +1,18 @@
 import React, {useState} from 'react';
-import {Text, View, ScrollView,StyleSheet,SafeAreaView,TextInput,Image,Button, TouchableOpacity} from 'react-native';
+import {Text, View, ScrollView,SafeAreaView,StyleSheet,TextInput,Image,Button, TouchableOpacity} from 'react-native';
 import {FONT,COLOR,SIZE,images,icons} from "../constants";
-import {useRouter,Stack} from "expo-router";
-const key = 'Test12345$';
+import {useRouter, Stack} from "expo-router";
 
-const signin = () => {
-    const [password, setPassword] = useState('');
-    const [username, setUserName] = useState('');
-    const [requesting, setRequesting] = useState(false);
+const forgot_pass = () => {
+
+    const [email, setEmail] = useState('');
     const router = useRouter();
     const handleSignIn = () =>{
-          if(username.length==0){
-            alert("Please enter username or email")
-          }else if(password.length==0){
-                alert("Please enter your password!");
-          }else{
-            setRequesting(true);
-            loginRequest();
-          }
-    
-        
+        router.push('/signin');
     };
     const handleForgotPassword = () =>{
         router.push('/forgot_pass');
     }
-    async function loginRequest() {
-        try {
-          await fetch('https://hansin.nezasoft.net/api/single_user/', {
-            method: 'POST',
-            body: JSON.stringify({
-              username: username,
-              password: password,
-              AuthKey: key,
-            }),
-          })
-            .then((respose) => {
-              if (respose.ok) {
-                return respose.json()
-              }
-              throw new Error('error')
-            })
-            .then((data) => {
-              if (data.userID) {
-                console.log(data);
-                localStorage.setItem('user', data.userID);
-                localStorage.setItem('fname', data.fName);
-                router.push('/');
-              } else if(data.status==0) {
-                localStorage.clear();
-                //set error
-                alert("Wrong username / email");
-               //console.log(data);
-              }else{
-                alert("Unknown error occured!");
-              }
-            })
-        } catch (error) {
-          console.log(error.message);
-        }
-      }
-    
   return (
     <SafeAreaView styles={{flex:1, backgroundColor: COLOR.primary}}>
     <Stack.Screen  options={{
@@ -67,7 +20,7 @@ const signin = () => {
         headerShadowVisible: false,
         headerTitle:"",
         }}
-    /> 
+    />
     <View style={styles.mainContent} >  
     <ScrollView style={{marginTop:"20%"}}>
         
@@ -75,16 +28,14 @@ const signin = () => {
         <View style={styles.logo}>
             <Text><Image source={images.logo}   /></Text>
         </View>
-            <Text style={styles.large_font}>Signin</Text>
-            <TextInput style={styles.textInput} onChangeText={(username) => setUserName(username)} placeholder="Username" />
-            <TextInput style={styles.textInput} placeholder="Password" onChangeText={(password) => setPassword(password)} secureTextEntry={true}/>
-        
-            <TouchableOpacity onPress={handleSignIn} style={styles.btn}>
-                <Text style={{color:COLOR.white}}>Sign In</Text>
+            <Text style={styles.large_font}>Forgot Password</Text>
+            <TextInput style={styles.textInput} onChangeText={(email) => setEmail(email)} placeholder="Email Address" />
+            <TouchableOpacity onPress={handleForgotPassword} style={styles.btn}>
+                <Text style={{color:COLOR.white}}>Reset Password</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleForgotPassword} style={styles.action_link}>
-                <Text style={{color:COLOR.grey}}>Forgot Password?</Text>
+            <TouchableOpacity onPress={handleSignIn} style={styles.action_link}>
+                <Text style={{color:COLOR.grey}}>Sign In</Text>
             </TouchableOpacity>
             
         </View>
@@ -96,9 +47,11 @@ const signin = () => {
     </View>
 
     </View>
+
     </SafeAreaView>
   )
 }
+
 const styles = StyleSheet.create({
     inputForm : {
         backgroundColor: COLOR.white,
@@ -138,7 +91,7 @@ const styles = StyleSheet.create({
     footer: {
         fontSize: SIZE.small,
         color: COLOR.white,
-        marginTop: "73%",
+        marginTop: "88.5%",
         marginBottom: 0,
         alignItems: "center",
     },
@@ -164,5 +117,5 @@ const styles = StyleSheet.create({
     }
 
 });
-export default signin;
 
+export default forgot_pass

@@ -6,6 +6,7 @@ const COLOR = {
     primary: "#4ac4f3",
     secondary: "#170190",
     white: "#ffffff",
+    grey: "#68676E",
 };
 
 const FONT = {
@@ -18,6 +19,8 @@ const FONT = {
     small: 10,
     medium: 16,
     large: 20,
+    xsmall: 8,
+    xlarge: 30,
  } 
 
  

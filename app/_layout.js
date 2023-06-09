@@ -25,6 +25,7 @@ const Layout = () => {
         <Stack.Screen name="profile" />
         <Stack.Screen name="signin" />
         <Stack.Screen name="signup" />
+        <Stack.Screen name="forgot_pass" />
     </Stack>
     
     
