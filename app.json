@@ -1,6 +1,11 @@
 {
   "expo": {
     "scheme": "acme",
+    "splash": {
+      "image": "./assets/images/logo.png",
+      "backgroundColor": "#2e3192"
+
+    },
     "web": {
       "bundler": "metro"
     },
@@ -8,3 +13,4 @@
     "slug": "react_native_gui"
   }
 }
+

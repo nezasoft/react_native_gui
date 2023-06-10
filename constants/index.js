@@ -4,7 +4,7 @@ import icons from "./icons";
 
 const COLOR = {
     primary: "#4ac4f3",
-    secondary: "#170190",
+    secondary: "#2e3192",
     white: "#ffffff",
     grey: "#68676E",
 };

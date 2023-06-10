@@ -2,11 +2,17 @@ import {View, Text, SafeAreaView, StyleSheet,Image, TouchableOpacity} from "reac
 import {useState} from "react";
 import {FONT,COLOR,SIZE,images,icons} from "../constants";
 import {Stack, useRouter} from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SplashScreen from "expo-splash-screen";
+
+SplashScreen.preventAutoHideAsync();
 //import Ionicons from "@expo/vector-icons/Ionicons";
+
 
 const Home = () =>{
 
-    const userId = localStorage.getItem('user');
+    const userid = readUserID();
+    //const fname = AsyncStorage.getItem('fname');
     const router = useRouter();
     const displayMenu = () =>{
         router.push('/menu');
@@ -15,12 +21,29 @@ const Home = () =>{
         router.push('/profile');
     };
 
-    if(userId.length==0){
+   if(userid===null){
         router.push('/signin');
-    }else{
-        router.push('/home');
-
     }
+
+    async function readUserID(){
+        try{
+           const userid = await AsyncStorage.getItem('userID');
+    
+           if(userid!==null){
+                return userid;
+    
+           }else{
+                //alert("Error occured fetching your data!");
+                //redirect user to signin 
+                router.push('/signin');
+           }           
+    
+        }catch(err){
+            alert(err);
+    
+        }
+    }
+
     return(
         <SafeAreaView styles={{flex:1, backgroundColor: COLOR.primary}}>
             <Stack.Screen  options={{

@@ -1,22 +1,28 @@
 import React, {useState} from 'react';
-import {Text, View, ScrollView,StyleSheet,SafeAreaView,TextInput,Image,Button, TouchableOpacity} from 'react-native';
+import {Text, View, ScrollView,StyleSheet,TextInput,Image,TouchableOpacity,ActivityIndicator} from 'react-native';
 import {FONT,COLOR,SIZE,images,icons} from "../constants";
 import {useRouter,Stack} from "expo-router";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as SplashScreen from "expo-splash-screen";
+
+SplashScreen.preventAutoHideAsync();
 const key = 'Test12345$';
 
 const signin = () => {
     const [password, setPassword] = useState('');
     const [username, setUserName] = useState('');
-    const [requesting, setRequesting] = useState(false);
+    const [spinner, setSpinner] = useState(false);
     const router = useRouter();
-    const handleSignIn = () =>{
+    const handleSignIn = (e) =>{
+      e.preventDefault();
           if(username.length==0){
             alert("Please enter username or email")
           }else if(password.length==0){
                 alert("Please enter your password!");
           }else{
-            setRequesting(true);
+            setSpinner(true);
             loginRequest();
+            setSpinner(false);
           }
     
         
@@ -42,12 +48,12 @@ const signin = () => {
             })
             .then((data) => {
               if (data.userID) {
-                console.log(data);
-                localStorage.setItem('user', data.userID);
-                localStorage.setItem('fname', data.fName);
+                //console.log(data);             
+                storeData(data.userID);
+                AsyncStorage.setItem('fname', data.fname);
                 router.push('/');
               } else if(data.status==0) {
-                localStorage.clear();
+                AsyncStorage.clear();
                 //set error
                 alert("Wrong username / email");
                //console.log(data);
@@ -59,9 +65,18 @@ const signin = () => {
           console.log(error.message);
         }
       }
+
+     async function  storeData(data){
+        try{
+          await AsyncStorage.setItem('userID',data);
+        }catch(err){
+          console.log(err);
+          alert("Error saving data");
+        }
+      };
     
   return (
-    <SafeAreaView styles={{flex:1, backgroundColor: COLOR.primary}}>
+    <View styles={{flex:1, backgroundColor: COLOR.primary}}>
     <Stack.Screen  options={{
         headerStyle: {backgroundColor: COLOR.white},
         headerShadowVisible: false,
@@ -73,19 +88,29 @@ const signin = () => {
         
         <View style={styles.inputForm}>
         <View style={styles.logo}>
-            <Text><Image source={images.logo}   /></Text>
+            <Image source={images.logo} style={{width:200,height:52}}   />
         </View>
             <Text style={styles.large_font}>Signin</Text>
             <TextInput style={styles.textInput} onChangeText={(username) => setUserName(username)} placeholder="Username" />
             <TextInput style={styles.textInput} placeholder="Password" onChangeText={(password) => setPassword(password)} secureTextEntry={true}/>
-        
+            {// show spinner when sening request. other wise show buttonr
+             spinner===true ?
+             <ActivityIndicator size="small" color="#170190"  />
+             : 
             <TouchableOpacity onPress={handleSignIn} style={styles.btn}>
                 <Text style={{color:COLOR.white}}>Sign In</Text>
             </TouchableOpacity>
+            
+          }
+            
+      
+             <TouchableOpacity onPress={handleForgotPassword} style={styles.action_link}>
+             <Text style={{color:COLOR.grey}}>Forgot Password?</Text>
+              </TouchableOpacity>
+            
+            
 
-            <TouchableOpacity onPress={handleForgotPassword} style={styles.action_link}>
-                <Text style={{color:COLOR.grey}}>Forgot Password?</Text>
-            </TouchableOpacity>
+            
             
         </View>
         
@@ -96,7 +121,7 @@ const signin = () => {
     </View>
 
     </View>
-    </SafeAreaView>
+    </View>
   )
 }
 const styles = StyleSheet.create({
@@ -143,11 +168,13 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     mainContent : {
-        backgroundColor: "#000000",
+        backgroundColor: COLOR.secondary,
     },
     logo : {
         padding: 5,
         marginBottom: 20,
+
+        
     },
     btn : {
         borderRadius: 50,
