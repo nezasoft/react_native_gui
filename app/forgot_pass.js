@@ -7,14 +7,11 @@ const forgot_pass = () => {
 
     const [email, setEmail] = useState('');
     const router = useRouter();
-    const handleSignIn = () =>{
-        router.push('/signin');
-    };
     const handleForgotPassword = () =>{
         router.push('/forgot_pass');
     }
   return (
-    <SafeAreaView styles={{flex:1, backgroundColor: COLOR.primary}}>
+    <View  style={styles.mainContent} >
     <Stack.Screen  options={{
         headerStyle: {backgroundColor: COLOR.white},
         headerShadowVisible: false,
@@ -22,11 +19,11 @@ const forgot_pass = () => {
         }}
     />
     <View style={styles.mainContent} >  
-    <ScrollView style={{marginTop:"20%"}}>
+    <ScrollView style={{marginTop:"5%"}}>
         
         <View style={styles.inputForm}>
         <View style={styles.logo}>
-            <Text><Image source={images.logo}   /></Text>
+            <Image source={images.logo}   style={{width:200,height:52}}  />
         </View>
             <Text style={styles.large_font}>Forgot Password</Text>
             <TextInput style={styles.textInput} onChangeText={(email) => setEmail(email)} placeholder="Email Address" />
@@ -34,24 +31,18 @@ const forgot_pass = () => {
                 <Text style={{color:COLOR.white}}>Reset Password</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleSignIn} style={styles.action_link}>
+            <TouchableOpacity onPress={() => router.push("/signin")} style={styles.action_link}>
                 <Text style={{color:COLOR.grey}}>Sign In</Text>
             </TouchableOpacity>
             
         </View>
         
     </ScrollView>
-
-    <View style={styles.footer}>
-        <Text style={{color:COLOR.white, fontSize:SIZE.small}}>Powered by www.nezasoft.net</Text>
     </View>
 
     </View>
-
-    </SafeAreaView>
   )
 }
-
 const styles = StyleSheet.create({
     inputForm : {
         backgroundColor: COLOR.white,
@@ -91,16 +82,19 @@ const styles = StyleSheet.create({
     footer: {
         fontSize: SIZE.small,
         color: COLOR.white,
-        marginTop: "88.5%",
+        marginTop: "73%",
         marginBottom: 0,
         alignItems: "center",
     },
     mainContent : {
-        backgroundColor: "#000000",
+        backgroundColor: COLOR.secondary,
+        height:"100%",
     },
     logo : {
         padding: 5,
         marginBottom: 20,
+
+        
     },
     btn : {
         borderRadius: 50,

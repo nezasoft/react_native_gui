@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import {Text, View, ScrollView,StyleSheet,TextInput,Image,TouchableOpacity,ActivityIndicator} from 'react-native';
 import {FONT,COLOR,SIZE,images,icons} from "../constants";
 import {useRouter,Stack} from "expo-router";
@@ -13,23 +13,22 @@ const signin = () => {
     const [username, setUserName] = useState('');
     const [spinner, setSpinner] = useState(false);
     const router = useRouter();
-    const handleSignIn = (e) =>{
-      e.preventDefault();
+    
+    const handleSignIn = () =>{
+   
           if(username.length==0){
             alert("Please enter username or email")
           }else if(password.length==0){
                 alert("Please enter your password!");
           }else{
-            setSpinner(true);
-            loginRequest();
-            setSpinner(false);
+            setSpinner(true);            
+              loginRequest();      
+              setSpinner(false);
           }
     
         
     };
-    const handleForgotPassword = () =>{
-        router.push('/forgot_pass');
-    }
+  
     async function loginRequest() {
         try {
           await fetch('https://hansin.nezasoft.net/api/single_user/', {
@@ -50,7 +49,7 @@ const signin = () => {
               if (data.userID) {
                 //console.log(data);             
                 storeData(data.userID);
-                AsyncStorage.setItem('fname', data.fname);
+                AsyncStorage.setItem('fname', data.fName);
                 router.push('/');
               } else if(data.status==0) {
                 AsyncStorage.clear();
@@ -61,6 +60,7 @@ const signin = () => {
                 alert("Unknown error occured!");
               }
             })
+            
         } catch (error) {
           console.log(error.message);
         }
@@ -76,15 +76,15 @@ const signin = () => {
       };
     
   return (
-    <View styles={{flex:1, backgroundColor: COLOR.primary}}>
+    <View  style={styles.mainContent} >  
     <Stack.Screen  options={{
         headerStyle: {backgroundColor: COLOR.white},
         headerShadowVisible: false,
         headerTitle:"",
         }}
     /> 
-    <View style={styles.mainContent} >  
-    <ScrollView style={{marginTop:"20%"}}>
+   
+    <ScrollView style={{marginTop:"5%"}}>
         
         <View style={styles.inputForm}>
         <View style={styles.logo}>
@@ -95,7 +95,7 @@ const signin = () => {
             <TextInput style={styles.textInput} placeholder="Password" onChangeText={(password) => setPassword(password)} secureTextEntry={true}/>
             {// show spinner when sening request. other wise show buttonr
              spinner===true ?
-             <ActivityIndicator size="small" color="#170190"  />
+             <ActivityIndicator animating = {spinner} size="small" color="#170190"  />
              : 
             <TouchableOpacity onPress={handleSignIn} style={styles.btn}>
                 <Text style={{color:COLOR.white}}>Sign In</Text>
@@ -104,7 +104,7 @@ const signin = () => {
           }
             
       
-             <TouchableOpacity onPress={handleForgotPassword} style={styles.action_link}>
+             <TouchableOpacity onPress={() => router.push("/forgot_pass")} style={styles.action_link}>
              <Text style={{color:COLOR.grey}}>Forgot Password?</Text>
               </TouchableOpacity>
             
@@ -115,13 +115,8 @@ const signin = () => {
         </View>
         
     </ScrollView>
-
-    <View style={styles.footer}>
-        <Text style={{color:COLOR.white, fontSize:SIZE.small}}>Powered by www.nezasoft.net</Text>
     </View>
-
-    </View>
-    </View>
+ 
   )
 }
 const styles = StyleSheet.create({
@@ -145,6 +140,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#F4F3F9",
         color: COLOR.primary,
         borderColor: COLOR.secondary,
+        borderWidth: 1,
         borderRadius: 10,
         marginBottom: 20,
         height: 45,
@@ -169,6 +165,7 @@ const styles = StyleSheet.create({
     },
     mainContent : {
         backgroundColor: COLOR.secondary,
+        height:"100%",
     },
     logo : {
         padding: 5,

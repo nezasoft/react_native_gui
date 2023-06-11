@@ -8,6 +8,7 @@ import * as SplashScreen from "expo-splash-screen";
 SplashScreen.preventAutoHideAsync();
 //import Ionicons from "@expo/vector-icons/Ionicons";
 
+//AsyncStorage.clear();
 
 const Home = () =>{
 
@@ -21,9 +22,9 @@ const Home = () =>{
         router.push('/profile');
     };
 
-   if(userid===null){
+  /* if(userid===null){
         router.push('/signin');
-    }
+    }*/
 
     async function readUserID(){
         try{
