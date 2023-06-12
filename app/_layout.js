@@ -28,6 +28,9 @@ const Layout = () => {
         <Stack.Screen name="signin" />
         <Stack.Screen name="signup" />
         <Stack.Screen name="forgot_pass" />
+        <Stack.Screen name="chat" />
+        <Stack.Screen name="invoices" />
+        <Stack.Screen name="payments" />
     </Stack>
     
     

@@ -20,16 +20,16 @@ const signin = () => {
             alert("Please enter username or email")
           }else if(password.length==0){
                 alert("Please enter your password!");
-          }else{
-            setSpinner(true);            
-              loginRequest();      
-              setSpinner(false);
-          }
-    
+          }else{                   
+            loginRequest();                 
+          }  
         
     };
-  
+
+     
+
     async function loginRequest() {
+      setSpinner(true);   
         try {
           await fetch('https://hansin.nezasoft.net/api/single_user/', {
             method: 'POST',
@@ -64,6 +64,8 @@ const signin = () => {
         } catch (error) {
           console.log(error.message);
         }
+
+        setSpinner(false);
       }
 
      async function  storeData(data){

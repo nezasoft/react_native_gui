@@ -16,10 +16,10 @@ const FONT = {
   };
 
  const SIZE = {
-    small: 10,
+    small: 12,
     medium: 16,
     large: 20,
-    xsmall: 8,
+    xsmall: 10,
     xlarge: 30,
  } 
 
