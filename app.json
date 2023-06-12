@@ -12,7 +12,7 @@
     "web": {
       "bundler": "metro"
     },
-    "name": "react_native_gui",
+    "name": "Nerve Mobile App",
     "slug": "react_native_gui"
   }
 }

@@ -9,5 +9,6 @@ import delete_icon from "../assets/icons/delete.png";
 import refresh from "../assets/icons/refresh.png";
 import chat from "../assets/icons/chat.png";
 import payment from "../assets/icons/payment.png";
+import share from "../assets/icons/share.png";
 
-export default {user,profile,stack,home, logout, invoices, edit, delete_icon, refresh,chat,payment};
+export default {user,profile,stack,home, logout, invoices, edit, delete_icon, refresh,chat,payment,share};

@@ -53,58 +53,174 @@ const Home = () =>{
         <SafeAreaView styles={{flex:1, backgroundColor: COLOR.primary}}>
             
             <Stack.Screen  options={{
-                headerStyle: {backgroundColor: COLOR.secondary},
+                headerStyle: {backgroundColor: COLOR.white},
                 headerShadowVisible: false,
                 headerLeft: () => (
                     <TouchableOpacity style={styles.menuBtnLeft} onPress={displayMenu}>
-                      <Text><Image  style={styles.iconSize} source={icons.stack} /></Text>  
+                      <Text><Image  style={{width:25, height:25}} source={icons.stack} /></Text>  
                     </TouchableOpacity>
                 ),
                 headerRight: () =>(
                     <TouchableOpacity style={styles.menuBtnRight} onPress={displayProfile}>
                         <Text>
-                         <Image  style={styles.iconSize} source={icons.profile} />
+                         <Image  style={{width:25, height:25}} source={icons.profile} />
                          </Text>
                     </TouchableOpacity>
                 ),
-                headerTitle:"",
+                headerTitle:"Home",
                 }}
             />
             
-            <View style={{backgroundColor: COLOR.secondary, height:"8%"}}>
+            <View style={{backgroundColor: COLOR.secondary, height:"7%"}}>
             <ImageBackground source={images.pic1} style={{height:"100%"}}>
                 <Text style={styles.headerText}>Hello, {`${fname}`} </Text>
-                <Text style={{color:COLOR.white, margin:4, fontSize: SIZE.medium}} >Welcome back! Its nice to see you </Text>
+                <Text style={{color:COLOR.white, margin:2, fontSize: SIZE.medium}} >Welcome back! Its nice to see you </Text>
                 </ImageBackground>
             </View>
             
             
             <View>
+                <View style={{padding:3, margin: 5, backgroundColor: COLOR.secondary, alignItems:"center"}}>
+                    <Text style={{fontSize : SIZE.large, color: COLOR.white}}>Current Balance:</Text>
+                    <Text style={{fontSize : SIZE.xlarge, color: COLOR.white}}>KES 10,500.00</Text>
+                </View>
+
+
                 
                     <View style={[styles.homeCardItem, styles.shadowProp]}>
                     <ImageBackground source={images.pic4} style={{height:"100%"}}>
-                        <Text style={styles.headerText}> <Image source={icons.invoices} style={styles.iconSize}/> Invoices</Text>
-                        <Text style={styles.headerText}>Item 2</Text>
+                        <Text style={styles.headerText}> <Image source={icons.invoices} style={{width:25, height:25}}/> Recent Invoices</Text>
+                        <Text style={{color:COLOR.white}}>.....................................</Text>
+                        <ScrollView horizontal={true} showsVerticalScrollIndicator={false}>
+                            <View style={{flex:1,flexDirection:"row", justifyContent:"space-between"}}>
+                                <View style={styles.invoiceCardItem}>
+                                        <Text style={{fontWeight: "bold",fontSize: SIZE.large, color: COLOR.grey,marginBottom:5}}>INV 12451</Text>
+                                        <Text style={{fontWeight: "bold",fontSize: SIZE.medium, backgroundColor: COLOR.primary, color: COLOR.white,marginBottom: 5}}> 20 Mb Shared</Text>
+                                        <Text style={{fontSize: SIZE.small}}>1st July 2023</Text>
+                                        <TouchableOpacity><Text style={styles.viewMore}>View</Text></TouchableOpacity>
+                                </View>
+                                <View style={styles.invoiceCardItem}>
+                                        <Text style={{fontWeight: "bold",fontSize: SIZE.large, color: COLOR.grey,marginBottom:5}}>INV 12451</Text>
+                                        <Text style={{fontWeight: "bold",fontSize: SIZE.medium, backgroundColor: COLOR.primary, color: COLOR.white,marginBottom: 5}}> 20 Mb Shared</Text>
+                                        <Text style={{fontSize: SIZE.small}}>1st July 2023</Text>
+                                        <TouchableOpacity><Text style={styles.viewMore}>View</Text></TouchableOpacity>
+                                </View>
+                                <View style={styles.invoiceCardItem}>
+                                        <Text style={{fontWeight: "bold",fontSize: SIZE.large, color: COLOR.grey,marginBottom:5}}>INV 12451</Text>
+                                        <Text style={{fontWeight: "bold",fontSize: SIZE.medium, backgroundColor: COLOR.primary, color: COLOR.white,marginBottom: 5}}> 20 Mb Shared</Text>
+                                        <Text style={{fontSize: SIZE.small}}>1st July 2023</Text>
+                                        <TouchableOpacity><Text style={styles.viewMore}>View</Text></TouchableOpacity>
+                                </View>
+                                <View style={styles.invoiceCardItem}>
+                                        <Text style={{fontWeight: "bold",fontSize: SIZE.large, color: COLOR.grey,marginBottom:5}}>INV 12451</Text>
+                                        <Text style={{fontWeight: "bold",fontSize: SIZE.medium, backgroundColor: COLOR.primary, color: COLOR.white,marginBottom: 5}}> 20 Mb Shared</Text>
+                                        <Text style={{fontSize: SIZE.small}}>1st July 2023</Text>
+                                        <TouchableOpacity><Text style={styles.viewMore}>View</Text></TouchableOpacity>
+                                </View>
+                                <View style={styles.invoiceCardItem}>
+                                        <Text style={{fontWeight: "bold",fontSize: SIZE.large, color: COLOR.grey,marginBottom:5}}>INV 12451</Text>
+                                        <Text style={{fontWeight: "bold",fontSize: SIZE.medium, backgroundColor: COLOR.primary, color: COLOR.white,marginBottom: 5}}> 20 Mb Shared</Text>
+                                        <Text style={{fontSize: SIZE.small}}>1st July 2023</Text>
+                                        <TouchableOpacity><Text style={styles.viewMore}>View</Text></TouchableOpacity>
+                                </View>
+                                
+                          
+
+                            </View>
+
+                        </ScrollView>
+                        <View><Text style={{ textAlign :"center", width:"40%", backgroundColor: COLOR.secondary,color: COLOR.white, borderRadius: 20, padding:5, margin: 5}}>View All Invoices >></Text></View>
                        </ImageBackground>
                     </View>
                 
-            <View style={{flexDirection:"column", justifyContent:"space-between",  margin:5,height: "28%", borderWidth:1, borderRadius: 5,padding:5}}>
-                <Text>Item 1</Text>
-                <Text>Item 2</Text>
-            </View>
-            <View style={{flexDirection:"column", justifyContent:"space-between",  margin:5,height: "28%", borderWidth:1, borderRadius: 5,padding:5}}>
-                <Text>Item 1</Text>
-                <Text>Item 2</Text>
-            </View>
+                    <View style={[styles.homeCardItem, styles.shadowProp]}>
+                    <ImageBackground source={images.pic2} style={{height:"100%"}}>
+                        <Text style={styles.headerText}> <Image source={icons.payment} style={{width:25, height:25}}/> Recent payments</Text>
+                        <Text style={{color:COLOR.white}}>.....................................</Text>
+                        <ScrollView horizontal={true} showsVerticalScrollIndicator={false}>
+                            <View style={{flex:1,flexDirection:"row", justifyContent:"space-between"}}>
+                                <View style={styles.invoiceCardItem}>
+                                        <Text style={{fontWeight: "bold",fontSize: SIZE.large, color: COLOR.grey,marginBottom:5}}>RECEIPT 12451</Text>
+                                        <Text style={{fontWeight: "bold",fontSize: SIZE.medium, backgroundColor: COLOR.secondary, color: COLOR.white,marginBottom: 5}}> 20 Mb Shared</Text>
+                                        <Text style={{fontSize: SIZE.small}}>1st July 2023</Text>
+                                        <TouchableOpacity><Text style={styles.viewMore}>View</Text></TouchableOpacity>
+                                </View>
+                                <View style={styles.invoiceCardItem}>
+                                        <Text style={{fontWeight: "bold",fontSize: SIZE.large, color: COLOR.grey,marginBottom:5}}>RECEIPT 12451</Text>
+                                        <Text style={{fontWeight: "bold",fontSize: SIZE.medium, backgroundColor: COLOR.secondary, color: COLOR.white,marginBottom: 5}}> 20 Mb Shared</Text>
+                                        <Text style={{fontSize: SIZE.small}}>1st July 2023</Text>
+                                        <TouchableOpacity><Text style={styles.viewMore}>View</Text></TouchableOpacity>
+                                </View>
+                                <View style={styles.invoiceCardItem}>
+                                        <Text style={{fontWeight: "bold",fontSize: SIZE.large, color: COLOR.grey,marginBottom:5}}>RECEIPT 12451</Text>
+                                        <Text style={{fontWeight: "bold",fontSize: SIZE.medium, backgroundColor: COLOR.secondary, color: COLOR.white,marginBottom: 5}}> 20 Mb Shared</Text>
+                                        <Text style={{fontSize: SIZE.small}}>1st July 2023</Text>
+                                        <TouchableOpacity><Text style={styles.viewMore}>View</Text></TouchableOpacity>
+                                </View>
+                                <View style={styles.invoiceCardItem}>
+                                        <Text style={{fontWeight: "bold",fontSize: SIZE.large, color: COLOR.grey,marginBottom:5}}>RECEIPT 12451</Text>
+                                        <Text style={{fontWeight: "bold",fontSize: SIZE.medium, backgroundColor: COLOR.secondary, color: COLOR.white,marginBottom: 5}}> 20 Mb Shared</Text>
+                                        <Text style={{fontSize: SIZE.small}}>1st July 2023</Text>
+                                        <TouchableOpacity><Text style={styles.viewMore}>View</Text></TouchableOpacity>
+                                </View>
+                            
+                          
 
+                            </View>
+                            
+                        </ScrollView>
+                       
+                       </ImageBackground>
+                    </View>
+                    <View style={[styles.homeCardItem, styles.shadowProp]}>
+                    <ImageBackground source={images.pic3} style={{height:"100%"}}>
+                        <Text style={styles.headerText}> <Image source={icons.share} style={{width:25, height:25}}/>Usage Statistics</Text>
+                        <Text style={{color:COLOR.white}}>.....................................</Text>
+                        <ScrollView horizontal={true} showsVerticalScrollIndicator={false}>
+                            <View style={{flex:1,flexDirection:"row", justifyContent:"space-between"}}>
+                                <View style={styles.invoiceCardItem}>
+                                        <Text style={{fontWeight: "bold",fontSize: SIZE.large, color: COLOR.grey,marginBottom:5}}>RECEIPT 12451</Text>
+                                        <Text style={{fontWeight: "bold",fontSize: SIZE.medium, backgroundColor: COLOR.secondary, color: COLOR.white,marginBottom: 5}}> 20 Mb Shared</Text>
+                                        <Text style={{fontSize: SIZE.small}}>1st July 2023</Text>
+                                        <TouchableOpacity><Text style={styles.viewMore}>View</Text></TouchableOpacity>
+                                </View>
+                                <View style={styles.invoiceCardItem}>
+                                        <Text style={{fontWeight: "bold",fontSize: SIZE.large, color: COLOR.grey,marginBottom:5}}>RECEIPT 12451</Text>
+                                        <Text style={{fontWeight: "bold",fontSize: SIZE.medium, backgroundColor: COLOR.secondary, color: COLOR.white,marginBottom: 5}}> 20 Mb Shared</Text>
+                                        <Text style={{fontSize: SIZE.small}}>1st July 2023</Text>
+                                        <TouchableOpacity><Text style={styles.viewMore}>View</Text></TouchableOpacity>
+                                </View>
+                                <View style={styles.invoiceCardItem}>
+                                        <Text style={{fontWeight: "bold",fontSize: SIZE.large, color: COLOR.grey,marginBottom:5}}>RECEIPT 12451</Text>
+                                        <Text style={{fontWeight: "bold",fontSize: SIZE.medium, backgroundColor: COLOR.secondary, color: COLOR.white,marginBottom: 5}}> 20 Mb Shared</Text>
+                                        <Text style={{fontSize: SIZE.small}}>1st July 2023</Text>
+                                        <TouchableOpacity><Text style={styles.viewMore}>View</Text></TouchableOpacity>
+                                </View>
+                                <View style={styles.invoiceCardItem}>
+                                        <Text style={{fontWeight: "bold",fontSize: SIZE.large, color: COLOR.grey,marginBottom:5}}>RECEIPT 12451</Text>
+                                        <Text style={{fontWeight: "bold",fontSize: SIZE.medium, backgroundColor: COLOR.secondary, color: COLOR.white,marginBottom: 5}}> 20 Mb Shared</Text>
+                                        <Text style={{fontSize: SIZE.small}}>1st July 2023</Text>
+                                        <TouchableOpacity><Text style={styles.viewMore}>View</Text></TouchableOpacity>
+                                </View>
+                            
+                          
+
+                            </View>
+                            
+                        </ScrollView>
+                       
+                       </ImageBackground>
+                    </View>
+            <ImageBackground source={images.pic1}>
             <View style={styles.footer}>
+                
                 <TouchableOpacity onPress={() => router.push("/home")}  style={styles.iconStyle}><Image source={icons.home} style={styles.iconSize}/></TouchableOpacity>
                 <TouchableOpacity onPress={() => router.push("/invoices")}  style={styles.iconStyle}><Image source={icons.invoices} style={styles.iconSize}/></TouchableOpacity>
                 <TouchableOpacity onPress={() => router.push("/payments")}  style={styles.iconStyle}><Image source={icons.payment} style={styles.iconSize}/></TouchableOpacity>
                 <TouchableOpacity onPress={() => router.push("/chat")}  style={styles.iconStyle}><Image source={icons.chat} style={styles.iconSize}/></TouchableOpacity>
-                <TouchableOpacity onPress={() => {AsyncStorage.clear(); router.push("/signin")}}  style={styles.iconStyle}><Image source={icons.logout} style={styles.iconSize}/></TouchableOpacity>
+                <TouchableOpacity onPress={() => {AsyncStorage.clear(); router.push("/signin")}}  style={styles.iconStyle}><Image source={icons.logout} style={styles.iconSize}/></TouchableOpacity>            
             </View>
-            
+            </ImageBackground>
             </View>
         </SafeAreaView>
     );
@@ -145,34 +261,54 @@ const styles = StyleSheet.create({
         width:30,
     },
     iconStyle : {
-        borderWidth: 1,
-        borderColor: COLOR.secondary,
-        borderRadius: 5,
-        padding: 2,
+        padding: 1,
     },
 
     footer : { flexDirection :"row",  
     justifyContent:"space-between", 
-    margin:5,height: "5%", 
+    marginTop: 3,
+    height: "5%", 
     paddingLeft:5,
     paddingRight:5,
 },
 homeCardItem : {
     flexDirection:"column", 
     justifyContent:"space-between",
-    margin:5,height: "28%", 
-    borderWidth:1, 
-    borderRadius: 5,
-    padding:5,
+    margin:2,
+    height: "26%", 
+    padding:2,
     color : COLOR.white,
 
-
+},
+invoiceCardItem : {
+    backgroundColor: COLOR.white,
+    borderColor: COLOR.secondary,
+    borderWidth: 1,
+    borderRadius:5,
+    height:"95%", 
+    width:"30%",
+    padding:5,
+    margin:5,
 },
 shadowProp: {
     shadowColor: '#171717',
     shadowOffset: {width: -2, height: 4},
     shadowOpacity: 0.2,
     shadowRadius: 3,
+  },
+  viewMore : {
+    color: COLOR.white,
+    backgroundColor: COLOR.secondary,
+    borderColor: COLOR.secondary,
+    width: 35,
+    borderWidth: 1,
+    borderRadius: 15,
+    marginTop: 8,
+    padding:2,
+    fontSize : SIZE.xsmall,
+    textAlign :"center",
+
+
   },
 }
   
