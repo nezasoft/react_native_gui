@@ -1,9 +1,10 @@
-import {View, Text, SafeAreaView,ScrollView, StyleSheet,Image, TouchableOpacity} from "react-native";
+import {View, Text, SafeAreaView,ScrollView, StyleSheet,Image,ImageBackground, TouchableOpacity} from "react-native";
 import {useState} from "react";
 import {FONT,COLOR,SIZE,images,icons} from "../constants";
 import {Stack, useRouter} from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as SplashScreen from "expo-splash-screen";
+
 
 SplashScreen.preventAutoHideAsync();
 //import Ionicons from "@expo/vector-icons/Ionicons";
@@ -50,6 +51,7 @@ const Home = () =>{
 
     return(
         <SafeAreaView styles={{flex:1, backgroundColor: COLOR.primary}}>
+            
             <Stack.Screen  options={{
                 headerStyle: {backgroundColor: COLOR.secondary},
                 headerShadowVisible: false,
@@ -68,15 +70,24 @@ const Home = () =>{
                 headerTitle:"",
                 }}
             />
+            
             <View style={{backgroundColor: COLOR.secondary, height:"8%"}}>
+            <ImageBackground source={images.pic1} style={{height:"100%"}}>
                 <Text style={styles.headerText}>Hello, {`${fname}`} </Text>
                 <Text style={{color:COLOR.white, margin:4, fontSize: SIZE.medium}} >Welcome back! Its nice to see you </Text>
+                </ImageBackground>
             </View>
+            
+            
             <View>
-            <View style={[styles.homeCardItem, styles.shadowProp]}>
-                <Text style={styles.headerText}> <Image source={icons.invoices} style={styles.iconSize}/> Invoices</Text>
-                <Text>Item 2</Text>
-            </View>
+                
+                    <View style={[styles.homeCardItem, styles.shadowProp]}>
+                    <ImageBackground source={images.pic4} style={{height:"100%"}}>
+                        <Text style={styles.headerText}> <Image source={icons.invoices} style={styles.iconSize}/> Invoices</Text>
+                        <Text style={styles.headerText}>Item 2</Text>
+                       </ImageBackground>
+                    </View>
+                
             <View style={{flexDirection:"column", justifyContent:"space-between",  margin:5,height: "28%", borderWidth:1, borderRadius: 5,padding:5}}>
                 <Text>Item 1</Text>
                 <Text>Item 2</Text>
@@ -97,9 +108,7 @@ const Home = () =>{
             </View>
         </SafeAreaView>
     );
-
 };
-
 const styles = StyleSheet.create({
     headerText : {
         fontSize: SIZE.large,
