@@ -3,7 +3,7 @@ import {useState,useEffect} from "react";
 import {FONT,COLOR,SIZE,images,icons,KEY} from "../constants";
 import {Stack, useRouter} from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {InvoiceList} from "../components/InvoiceList";
+import InvoiceList from "../components/InvoiceList";
 const key = KEY;
 const invoices = () => {
     const [spinner, setSpinner] = useState(false);
@@ -91,15 +91,18 @@ const invoices = () => {
                     <Text>Show all</Text>
                 </TouchableOpacity>
             </View>
+            
             <View>
                 {spinner ? (
                      <ActivityIndicator animating = {spinner} size="large" color="#170190"  />      
                 ) : (
                   
                     data?.map((invoice)=>{
-                        <InvoiceList invoice={invoice}
+                        <InvoiceList 
+                        invoice={invoice}
                         key={`invoice-id-${invoice.invoiceID}`}
-                        handleNavigate={()=> router.push(`/invoice_detail/${invoice.invoiceID}`)} />
+                        handleNavigate={()=> router.push(`/invoice_detail/${invoice.invoiceID}`)} 
+                        />
                     })
                 )}
             </View>
