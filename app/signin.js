@@ -1,12 +1,12 @@
 import React, {useState,useEffect} from 'react';
 import {Text, View, ScrollView,StyleSheet,TextInput,Image,TouchableOpacity,ActivityIndicator} from 'react-native';
-import {FONT,COLOR,SIZE,images,icons} from "../constants";
+import {FONT,COLOR,SIZE,images,icons,KEY} from "../constants";
 import {useRouter,Stack} from "expo-router";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as SplashScreen from "expo-splash-screen";
 
 SplashScreen.preventAutoHideAsync();
-const key = 'Test12345$';
+const key = KEY;
 
 const signin = () => {
     const [password, setPassword] = useState('');
@@ -62,7 +62,7 @@ const signin = () => {
             })
             
         } catch (error) {
-          console.log(error.message);
+          console.log(error);
         }
 
         setSpinner(false);

@@ -1,7 +1,7 @@
 import images from "./images";
 import icons from "./icons";
 
-
+const KEY = 'Test12345$';
 const COLOR = {
     primary: "#4ac4f3",
     secondary: "#2e3192",
@@ -26,4 +26,4 @@ const FONT = {
  
 
 
-  export {COLOR, FONT, SIZE, images,icons};
+  export {COLOR, FONT, SIZE, images,icons, KEY};

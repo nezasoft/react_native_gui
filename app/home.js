@@ -81,7 +81,8 @@ const Home = () =>{
                 <View style={{padding:5, margin: 5, backgroundColor: COLOR.secondary, alignItems:"center"}}>
                     <Text style={{fontSize : SIZE.large, color: COLOR.white}}>Current Balance:</Text>
                     <Text style={{fontSize : SIZE.xlarge, color: COLOR.white}}>KES 10,500.00</Text>
-                </View>               
+                </View> 
+                 
                     <View style={[styles.homeCardItem, styles.shadowProp]}>
                     
                         <Text style={styles.invoiceHeaderText}> <Image source={icons.invoices} style={{width:25, height:25}}/> Recent Invoices</Text>
@@ -119,7 +120,7 @@ const Home = () =>{
                             </View>
 
                         </ScrollView>
-                        <View><Text style={{ textAlign :"center", width:"40%", backgroundColor: COLOR.secondary,color: COLOR.white, borderRadius: 20, padding:5, margin: 5}}>View All Invoices >> </Text></View>
+                        <View><Text style={{ textAlign :"center", width:"40%", backgroundColor: COLOR.secondary,color: COLOR.white, borderRadius: 20, padding:5, margin: 5}}>View All Invoices  </Text></View>
                      
                     </View>
                 
@@ -162,9 +163,9 @@ const Home = () =>{
                             </View>                            
                         </ScrollView>
 
-                        <View><Text style={{ textAlign :"center", width:"40%", backgroundColor: COLOR.primary,color: COLOR.white, borderRadius: 20, padding:5, margin: 5}}>View All Payments >> </Text></View>
-                    </View>
-                  
+                        <View><Text style={{ textAlign :"center", width:"40%", backgroundColor: COLOR.primary,color: COLOR.white, borderRadius: 20, padding:5, margin: 5}}>View All Payments </Text></View>
+                    </View>       
+            </View>
             <View style={styles.footer}>
                 
                 <TouchableOpacity onPress={() => router.push("/home")}  style={styles.iconStyle}><Image source={icons.home} style={styles.iconSize}/></TouchableOpacity>
@@ -172,8 +173,6 @@ const Home = () =>{
                 <TouchableOpacity onPress={() => router.push("/payments")}  style={styles.iconStyle}><Image source={icons.payment} style={styles.iconSize}/></TouchableOpacity>
                 <TouchableOpacity onPress={() => router.push("/chat")}  style={styles.iconStyle}><Image source={icons.chat} style={styles.iconSize}/></TouchableOpacity>
                 <TouchableOpacity onPress={() => {AsyncStorage.clear(); router.push("/signin")}}  style={styles.iconStyle}><Image source={icons.logout} style={styles.iconSize}/></TouchableOpacity>            
-            </View>
-        
             </View>
         </SafeAreaView>
     );
@@ -227,8 +226,8 @@ const styles = StyleSheet.create({
 footer : { 
     flexDirection :"row",  
     justifyContent:"space-between", 
-    marginTop: 10,
-    height: "10%", 
+    marginTop: 5,
+    height: "5%", 
     paddingLeft:5,
     paddingRight:5,
 },
@@ -241,9 +240,6 @@ homeCardItem : {
     color : COLOR.white,
     borderWidth : 1,
     borderColor : COLOR.secondary,
-
-   
-
 },
 invoiceCardItem : {
     backgroundColor: COLOR.secondary,
