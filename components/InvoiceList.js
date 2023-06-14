@@ -3,6 +3,7 @@ import {FONT,COLOR,SIZE,images,icons} from "../constants";
 import {View, Text, StyleSheet,Image, TouchableOpacity} from "react-native";
 
 const InvoiceList = ({item, selectedInvoice, viewInvoice}) => {
+  let invStatus = item?.invStatus;
   return (
     <TouchableOpacity style={styles.container(selectedInvoice,item)} onPress={()=> viewInvoice(item)}>
             <TouchableOpacity>
@@ -14,7 +15,6 @@ const InvoiceList = ({item, selectedInvoice, viewInvoice}) => {
             <Text style={styles.itemName(selectedInvoice, item)} numberOfLines={1}>
                 {item.prodName}
             </Text>
-
             <View style={styles.infoContainer}>
                 <Text style={styles.itemNo(selectedInvoice, item)} numberOfLines={1}>
                  Inv # :   {item.invoiceNo}
@@ -24,9 +24,11 @@ const InvoiceList = ({item, selectedInvoice, viewInvoice}) => {
             <View style={styles.infoWrapper}>
                 <Text style={styles.valid_date(selectedInvoice, item)}> Bill Date: {item.sysDate}</Text>
                 <Text style={styles.valid_date(selectedInvoice, item)} >Valid Date :  {item?.valDate} </Text>
-                <Text style={styles.valid_date(selectedInvoice, item)} >Status :  {item?.invStatus} </Text>
-                
-
+                {invStatus === 'Paid' ? (
+                  <Text style={styles.green_pill} > {item?.invStatus} </Text>
+                ) : (
+                  <Text style={styles.red_pill} >  {item?.invStatus} </Text>
+                )}               
             </View>
 
         </TouchableOpacity>
@@ -64,13 +66,13 @@ const styles = StyleSheet.create({
       fontSize: SIZE.medium,
       fontFamily: FONT.Medium,
       color: selectedInvoice === item.invoiceID ?  COLOR.white : "#B3AEC6" ,
-      marginTop: SIZE.small / 1.5,
+      marginTop: SIZE.small,
     }),
     infoContainer: {
-      marginTop: SIZE.large,
+      marginTop: SIZE.small,
     },
     itemNo: (selectedInvoice, item) => ({
-      fontSize: SIZE.large,
+      fontSize: 16,
       fontFamily: FONT.Medium,
       color: selectedInvoice === item.invoiceID ? COLOR.white : COLOR.primary,
     }),
@@ -90,6 +92,27 @@ const styles = StyleSheet.create({
       borderRadius: 5,
       padding: 2,
     }),
+    red_pill: {
+      fontSize: SIZE.xsmall,
+      fontFamily: FONT.Regular,
+      color: COLOR.white,
+      marginRight : 5,
+      marginLeft : 5,
+      backgroundColor: "#C4062C",
+      borderRadius: 5,
+      padding: 2,
+    },
+
+    green_pill: {
+      fontSize: SIZE.xsmall,
+      fontFamily: FONT.Regular,
+      color: COLOR.white,
+      marginRight : 5,
+      marginLeft : 5,
+      backgroundColor:"#03A523",
+      borderRadius: 5,
+      padding: 2,
+    },
     
  
 

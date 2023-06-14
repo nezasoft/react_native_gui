@@ -37,7 +37,7 @@ const invoices = () => {
           method: 'POST',
           body: JSON.stringify({
             //clientID: userid,
-            clientID: 103,
+            clientID: 111,
             AuthKey: key,
             limit : 0,
           }),
@@ -92,15 +92,16 @@ const invoices = () => {
             /> 
      
     <View style={{backgroundColor: COLOR.secondary, height : "100%"}}>
-
+            <ImageBackground source={images.pic2} >
             <View >
                 <Text style={styles.headerText}>
-                    Invoices
+                    Invoice Report
                 </Text>
                 <TouchableOpacity >
                     <Text style={styles.viewMore}>Show all</Text>
                 </TouchableOpacity>
             </View>
+            </ImageBackground>
             <View>
                 {spinner ? (
                      <ActivityIndicator animating = {spinner} size="large" color="#ffffff"   /> 
