@@ -1,4 +1,4 @@
-import {View, Text, SafeAreaView,ScrollView, StyleSheet,Image,ActivityIndicator, TouchableOpacity} from "react-native";
+import {View, Text, SafeAreaView,ScrollView,FlatList, StyleSheet,Image,ActivityIndicator,ImageBackground, TouchableOpacity} from "react-native";
 import {useState,useEffect} from "react";
 import {FONT,COLOR,SIZE,images,icons,KEY} from "../constants";
 import {Stack, useRouter} from "expo-router";
@@ -39,6 +39,7 @@ const invoices = () => {
             //clientID: userid,
             clientID: 103,
             AuthKey: key,
+            limit : 0,
           }),
         })
           .then((respose) => {
@@ -50,7 +51,7 @@ const invoices = () => {
           .then((data) => {
 
            if (data) {
-              //console.log(data); 
+              console.log(data); 
               setData(data.data);
             } else if(data.status==0) {
               //set error
@@ -74,6 +75,13 @@ const invoices = () => {
      },[]);
 
 
+     const [selectedInvoice, setSelectedInvoice] = useState();
+
+     const viewInvoice = (item) => {
+       router.push(`/invoice_detail/${item.invoiceID}`);
+       setSelectedInvoice(item.invoiceID);
+     };
+
   return (
     <SafeAreaView styles={{flex:1, backgroundColor: COLOR.primary}}>
       <Stack.Screen  options={{
@@ -81,42 +89,41 @@ const invoices = () => {
                 headerShadowVisible: false,               
                 headerTitle:"Invoices",
                 }}
-            />
-<View>
+            /> 
+     
+    <View style={{backgroundColor: COLOR.secondary, height : "100%"}}>
+
             <View >
-                <Text >
+                <Text style={styles.headerText}>
                     Invoices
                 </Text>
                 <TouchableOpacity >
-                    <Text>Show all</Text>
+                    <Text style={styles.viewMore}>Show all</Text>
                 </TouchableOpacity>
             </View>
-            
             <View>
                 {spinner ? (
-                     <ActivityIndicator animating = {spinner} size="large" color="#170190"  />      
+                     <ActivityIndicator animating = {spinner} size="large" color="#ffffff"   /> 
+                      
                 ) : (
                   
-                    data?.map((invoice)=>{
-                        <InvoiceList 
-                        invoice={invoice}
-                        key={`invoice-id-${invoice.invoiceID}`}
-                        handleNavigate={()=> router.push(`/invoice_detail/${invoice.invoiceID}`)} 
-                        />
-                    })
+                  <FlatList
+                  data={data}
+                  renderItem={({ item }) => (
+                    <InvoiceList
+                      item={item}
+                      selectedInvoice={selectedInvoice}
+                      viewInvoice={viewInvoice}
+                    />
+                  )}
+                  keyExtractor={(item) => item.invoiceID}
+                  contentContainerStyle={{ columnGap: SIZE.medium }}
+                  vertical
+                />
                 )}
             </View>
-        </View>
-    
-
-    <View style={styles.footer}>
-                
-                <TouchableOpacity onPress={() => router.push("/home")}  style={styles.iconStyle}><Image source={icons.home} style={styles.iconSize}/></TouchableOpacity>
-                <TouchableOpacity onPress={() => router.push("/invoices")}  style={styles.iconStyle}><Image source={icons.invoices} style={styles.iconSize}/></TouchableOpacity>
-                <TouchableOpacity onPress={() => router.push("/payments")}  style={styles.iconStyle}><Image source={icons.payment} style={styles.iconSize}/></TouchableOpacity>
-                <TouchableOpacity onPress={() => router.push("/chat")}  style={styles.iconStyle}><Image source={icons.chat} style={styles.iconSize}/></TouchableOpacity>
-                <TouchableOpacity onPress={() => {AsyncStorage.clear(); router.push("/signin")}}  style={styles.iconStyle}><Image source={icons.logout} style={styles.iconSize}/></TouchableOpacity>            
-            </View>
+        </View> 
+     
     </SafeAreaView>
   )
 }
@@ -139,8 +146,33 @@ iconSize : {
 mainContent : {
 
 },
+headerText : {
+  fontSize: SIZE.large,
+  fontFamily: FONT.Bold,
+  color: COLOR.white,
+  margin: 4,
 
+},
+invoiceHeaderText : {
+  fontSize: SIZE.large,
+  fontFamily: FONT.Bold,
+  color: COLOR.secondary,
+  margin: 4,
 
+},
+viewMore : {
+  color: COLOR.white,
+  backgroundColor: COLOR.secondary,
+  borderColor: COLOR.white,
+  width: 100,
+  borderWidth: 1,
+  borderRadius: 15,
+  marginTop: 8,
+  margin: 5,
+  padding:2,
+  fontSize : SIZE.medium,
+  textAlign :"center",
+}
 
 });
 export default invoices

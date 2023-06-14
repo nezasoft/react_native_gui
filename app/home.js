@@ -25,10 +25,10 @@ const Home = () =>{
         router.push('/profile');
     };
 
-  if(userid===null){
+  /*if(userid===null){
         router.push('/signin');
     }
-
+*/
     async function readUserData(){
         try{
            const userid = await AsyncStorage.getItem('userID');
