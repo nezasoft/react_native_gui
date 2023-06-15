@@ -51,7 +51,7 @@ const invoices = () => {
           .then((data) => {
 
            if (data) {
-              console.log(data); 
+              //console.log(data); 
               setData(data.data);
             } else if(data.status==0) {
               //set error

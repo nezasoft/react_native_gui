@@ -1,6 +1,6 @@
 import {Stack, useRouter, useGlobalSearchParams} from "expo-router";
 import { useCallback, useState, useEffect } from "react";
-import{View,Text,ScrollView,SafeAreaView,ActivityIndicator,RefreshControl} from "react-native";
+import{View,Text,ScrollView,SafeAreaView,ActivityIndicator,RefreshControl, StyleSheet} from "react-native";
 import {FONT,COLOR,SIZE,images,icons,KEY} from "../../constants";
 
 import React from 'react';
@@ -45,7 +45,7 @@ const InvoiceDetail = () => {
                 throw new Error('error')
               })
               .then((data) => {
-    
+   
                if (data) {
                   console.log(data); 
                   setData(data.data);
@@ -95,23 +95,84 @@ const InvoiceDetail = () => {
                             <Text>Logo</Text>
                         </View>
                         <View style={{margin : 5, padding : 5, width : "20%"}}>
-                            <Text style={{fontSize : SIZE.large, textAlign : "center", color : COLOR.primary}}>Bill Invoice</Text>
+                            <Text style={{fontSize : SIZE.small, textAlign : "center", color : COLOR.primary}}>Bill Invoice</Text>
                         </View>
                         <View style={{margin : 5, padding : 5, width : "50%"}}>
-                            <Text style={{fontSize : SIZE.xsmall, textAlign : "right"}}>Physical Address : </Text>
-                            <Text style={{fontSize : SIZE.xsmall, textAlign : "right"}}>Postal Address : </Text>
-                            <Text style={{fontSize : SIZE.xsmall, textAlign : "right"}}>Telephone No : </Text>
-                            <Text style={{fontSize : SIZE.xsmall, textAlign : "right"}}>Mobile No : </Text>
-                            <Text style={{fontSize : SIZE.xsmall, textAlign : "right"}}>Email Address: </Text>
-                            <Text style={{fontSize : SIZE.xsmall, textAlign : "right"}}>Website: </Text>
+                            <Text style={styles.companyText}>Physical Address : </Text>
+                            <Text style={styles.companyText}>Postal Address : </Text>
+                            <Text style={styles.companyText}>Telephone No : </Text>
+                            <Text style={styles.companyText}>Mobile No : </Text>
+                            <Text style={styles.companyText}>Email Address: </Text>
+                            <Text style={styles.companyText}>Website: </Text>
                         </View>                                             
                     </View>
 
-                    <View style={{margin : 5, padding : 5, width : "95%", borderWidth : 1}}>
+                    <View style={styles.banner}>
+                      <Text style={styles.contentHeader}>Invoice Details</Text>
+                      <View style={{marginTop: 10,marginRight : 50, textAlign : "right"}}>
+                      <Text style={styles.contentInfo}>Company Name :</Text>
+                      <Text style={styles.contentInfo}>VAT / PIN No :</Text>
+                      </View>
+                      <View style={{marginTop: 10,marginLeft : 50, textAlign : "right"}}>
+                      <Text style={styles.contentInfo}>Bill Date :</Text>
+                      <Text style={styles.contentInfo}>Due Date :</Text>
+                      <Text style={styles.contentInfo}>Invoice No :</Text>
+                      </View>
 
                     </View>
-                    
-                    <Text>Invoice Content Here</Text>
+
+                    <View style={styles.banner}>
+                    <Text style={styles.contentHeader}>Customer Details</Text>
+                      <View style={{marginTop: 10,marginRight : 50, textAlign : "right"}}>
+                          <Text style={styles.contentInfo}>Client A/C :</Text>
+                          <Text style={styles.contentInfo}>Client Name :</Text>
+                          <Text style={styles.contentInfo}>Username :</Text>
+                          
+                      </View>
+                      <View style={{marginTop: 10,marginLeft : 50, textAlign : "right"}}>
+                      <Text style={styles.contentInfo}>Cellphone :</Text>
+                      <Text style={styles.contentInfo}>Billing Address :</Text>
+                      <Text style={styles.contentInfo}>Email Address :</Text>
+
+                      </View>
+
+                    </View>
+
+                    <View style={styles.billInfo}>
+                      <View><Text style={styles.billMenu}>Item  </Text></View>
+                      <View><Text style={styles.billMenu}>Description </Text></View>
+                      <View><Text style={styles.billMenu}>Billing Period </Text></View>
+                      <View><Text style={styles.billMenu}>Unit Price </Text></View>
+                      <View><Text style={styles.billMenu}> Qty </Text></View>
+                      <View><Text style={styles.billMenu}> Total (Tax Inc.) </Text></View>      
+                    </View>
+                    <View style={styles.billInfoDetail}>
+                      <View><Text style={styles.billMenuItem}>Item  </Text></View>
+                      <View><Text style={styles.billMenuItem}>Description </Text></View>
+                      <View><Text style={styles.billMenuItem}>Billing Period </Text></View>
+                      <View><Text style={styles.billMenuItem}>Unit Price </Text></View>
+                      <View><Text style={styles.billMenuItem}> Qty </Text></View>
+                      <View><Text style={styles.billMenuItem}> Total  </Text></View>      
+                    </View>
+
+                    <View style={styles.bankDetails}>
+                      <Text style={styles.contentHeader}>Bank Details</Text>
+                        <View style={{marginTop:10}}>
+                            <Text style={styles.bankItem}>Bank Name: </Text>
+                        </View>
+                        <View style={{marginTop:10}}>
+                            <Text style={styles.bankItem}>Account Name: </Text>
+                        </View>
+                        <View style={{marginTop:10}}>
+                            <Text style={styles.bankItem}>Account No: </Text>
+                        </View>
+                        <View style={{marginTop:10}}>
+                            <Text style={styles.bankItem}>Branch Name: </Text>
+                        </View>
+
+                        
+                    </View>
+      
 
                 </View>
             )}
@@ -121,4 +182,71 @@ const InvoiceDetail = () => {
   )
 }
 
+styles = StyleSheet.create({
+ contentHeader : {
+  fontSize : SIZE.xsmall,
+  fontWeight : "bold",
+  color : COLOR.white,
+  marginBottom : 5,
+ },
+ companyText : {
+  fontSize : 8,
+  textAlign : "right",
+ },
+ banner : {margin : 2,
+   padding : 2,
+   width : "95%",
+   backgroundColor : COLOR.primary,
+   flex : 1,
+   flexDirection : "row",
+  },
+  contentInfo : {
+    fontSize : 8,
+
+  },
+  billInfo : {
+    borderWidth : 0.5,
+    margin : 5,
+    padding : 5,
+    borderColor : COLOR.primary,
+    flexDirection : "row",
+    width : "95%",
+    justifyContent:"space-between", 
+
+  },
+  billInfoDetail : {
+    margin : 5,
+    padding : 5,
+    flexDirection : "row",
+    width : "95%",
+    justifyContent:"space-between", 
+
+  },
+  billMenu : {
+    fontSize : 10,
+    fontWeight : "bold",
+    marginRight: 10,
+  },
+
+  billMenuItem : {
+    fontSize : 8,
+    fontWeight : "medium",
+    marginRight: 10,
+  },
+  bankDetails : {
+    margin : 5,
+    padding : 5,
+    flexDirection : "row",
+    width : "95%",
+    justifyContent:"space-between", 
+    backgroundColor : COLOR.secondary,
+  },
+  bankItem : {
+    fontSize : 8,
+    fontWeight : "medium",
+    marginRight: 10,
+    color : COLOR.white,
+  },
+
+});
 export default InvoiceDetail
