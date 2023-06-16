@@ -39,7 +39,7 @@ const invoices = () => {
             //clientID: userid,
             clientID: 111,
             AuthKey: key,
-            limit : 0,
+            limit : 1000,
           }),
         })
           .then((respose) => {
@@ -51,7 +51,7 @@ const invoices = () => {
           .then((data) => {
 
            if (data) {
-              //console.log(data); 
+             // console.log(data); 
               setData(data.data);
             } else if(data.status==0) {
               //set error
