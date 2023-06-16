@@ -1,6 +1,6 @@
 import {Stack, useRouter, useGlobalSearchParams} from "expo-router";
 import { useCallback, useState, useEffect } from "react";
-import{View,Text,ScrollView,SafeAreaView,ActivityIndicator,RefreshControl, StyleSheet} from "react-native";
+import{View,Text,ScrollView,SafeAreaView,ActivityIndicator,RefreshControl, StyleSheet,Image} from "react-native";
 import {FONT,COLOR,SIZE,images,icons,KEY} from "../../constants";
 
 import React from 'react';
@@ -47,9 +47,9 @@ const InvoiceDetail = () => {
               .then((data) => {
    
                if (data) {
-                  console.log(data); 
+                 // console.log(data); 
                   setData(data.data);
-                } else if(data?.status===0) {
+                } else if(data?.status==0) {
                   //set error
                   alert("No record(s) found!");
                  //console.log(data);
@@ -69,6 +69,7 @@ const InvoiceDetail = () => {
        useEffect(()=>{
             requestData();
            },[]);
+           //console.log(data);
     
   return (
     <SafeAreaView styles={{flex:1, backgroundColor: COLOR.primary}}>
@@ -83,35 +84,36 @@ const InvoiceDetail = () => {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
         >
-            {spinner? (
+            { 
+            
+            spinner ? (
                 <ActivityIndicator style={{marginTop : 5}} size='large' color={COLOR.secondary} />
             ) : data?.status==0 ? (
                 <Text style={{padding: 5, margin:5, fontSize:SIZE.large, color : COLOR.secondary}}>No data available</Text>
             ) : (
-                <View style={{margin:5, padding : 5, borderWidth : 1, borderRadius : 5, backgroundColor : COLOR.white}}>
-                    
+              data?.map((item) => {               
+                <View key={item.invoice.invoiceNo}  style={{margin:5, padding : 5, borderWidth : 1, borderRadius : 5, backgroundColor : COLOR.white}}>
                     <View style={{flex :1 , flexDirection : "row",}}>
                         <View style={{margin : 5, padding : 5, width : "20%"}}>
-                            <Text>Logo</Text>
+                          <Image source={'https://hansin.nezasoft.net/images/logos/logo_1.png'} />                      
                         </View>
                         <View style={{margin : 5, padding : 5, width : "20%"}}>
                             <Text style={{fontSize : SIZE.small, textAlign : "center", color : COLOR.primary}}>Bill Invoice</Text>
                         </View>
                         <View style={{margin : 5, padding : 5, width : "50%"}}>
-                            <Text style={styles.companyText}>Physical Address : </Text>
+                            <Text style={styles.companyText}>Physical Address : {item.company.compPhy} </Text>
                             <Text style={styles.companyText}>Postal Address : </Text>
-                            <Text style={styles.companyText}>Telephone No : </Text>
-                            <Text style={styles.companyText}>Mobile No : </Text>
-                            <Text style={styles.companyText}>Email Address: </Text>
-                            <Text style={styles.companyText}>Website: </Text>
+                            <Text style={styles.companyText}>Mobile No : {item.company.compMobile}</Text>
+                            <Text style={styles.companyText}>Email Address: {item.company.compEmail} </Text>
+                            <Text style={styles.companyText}>Website: {item.company.compWeb} </Text>
                         </View>                                             
                     </View>
 
                     <View style={styles.banner}>
                       <Text style={styles.contentHeader}>Invoice Details</Text>
                       <View style={{marginTop: 10,marginRight : 50, textAlign : "right"}}>
-                      <Text style={styles.contentInfo}>Company Name :</Text>
-                      <Text style={styles.contentInfo}>VAT / PIN No :</Text>
+                      <Text style={styles.contentInfo}>Company Name : {item.company.compName}</Text>
+                      <Text style={styles.contentInfo}>VAT / PIN No :  {item.company.compVAT} </Text>
                       </View>
                       <View style={{marginTop: 10,marginLeft : 50, textAlign : "right"}}>
                       <Text style={styles.contentInfo}>Bill Date :</Text>
@@ -175,6 +177,10 @@ const InvoiceDetail = () => {
       
 
                 </View>
+
+
+              })
+                
             )}
 
         </ScrollView>
