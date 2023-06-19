@@ -1,4 +1,4 @@
-import {View, Text, SafeAreaView,ScrollView,FlatList, StyleSheet,Image,ActivityIndicator,ImageBackground, TouchableOpacity} from "react-native";
+import {View, Text, SafeAreaView,FlatList, StyleSheet,Image,ActivityIndicator,ImageBackground, TouchableOpacity} from "react-native";
 import {useState,useEffect} from "react";
 import {FONT,COLOR,SIZE,images,icons,KEY} from "../constants";
 import {Stack, useRouter} from "expo-router";
@@ -9,10 +9,11 @@ const invoices = () => {
     const [spinner, setSpinner] = useState(false);
     const [userid, setUserId] = useState('');
     const [data, setData] = useState([]);
+    const [nodata, setNoData] = useState(false);
     const [error, setError] = useState(null);
     const router = useRouter();
  
-    //readUserData();
+    readUserData();
     async function readUserData(){
       try{
          const userid = await AsyncStorage.getItem('userID');
@@ -36,8 +37,8 @@ const invoices = () => {
         await fetch('https://hansin.nezasoft.net/api/all_invoices/', {
           method: 'POST',
           body: JSON.stringify({
-            //clientID: userid,
-            clientID: 111,
+            clientID: userid,
+            //clientID: 111,
             AuthKey: key,
             limit : 1000,
           }),
@@ -50,16 +51,20 @@ const invoices = () => {
           })
           .then((data) => {
 
-           if (data) {
-             // console.log(data); 
-              setData(data.data);
-            } else if(data.status==0) {
-              //set error
-              alert("No record(s) found!");
-             //console.log(data);
-            }else{
-              alert("Unknown error occured!");
-            } 
+            if (data) {
+
+              if(data?.status!==0){ 
+                 setData(data.data);
+                 setNoData(false);
+                 //console.log(data); 
+              }else{
+                // console.log(data); 
+                 //console.log("No data returned!"); 
+                 setNoData(true);
+              }
+             }else{
+               alert("Unknown error occured!");
+             }  
           })
           
         } catch (error) {
@@ -97,16 +102,18 @@ const invoices = () => {
                 <Text style={styles.headerText}>
                     Invoice Report
                 </Text>
-                <TouchableOpacity >
-                    <Text style={styles.viewMore}>Show all</Text>
+                <TouchableOpacity onPress={requestData} >
+                    <Text style={styles.viewMore}>Refresh</Text>
                 </TouchableOpacity>
             </View>
             </ImageBackground>
             <View>
                 {spinner ? (
-                     <ActivityIndicator animating = {spinner} size="large" color="#ffffff"   /> 
+                     <ActivityIndicator style={{marginTop:"20%"}} animating = {spinner} size="large" color="#ffffff"   /> 
                       
-                ) : (
+                  ): nodata ? (  
+                      <Text style={{padding: 5, margin:5, fontSize:SIZE.large, color : COLOR.white}}>No data available at the moment. Please refresh!</Text>
+                 ) : ( 
                   
                   <FlatList
                   data={data}

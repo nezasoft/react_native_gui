@@ -49,8 +49,8 @@ const signin = () => {
               if (data.userID) {
                 //console.log(data);             
                 storeData(data.userID);
-                AsyncStorage.setItem('fname', data.fName);
-                router.push('/');
+                AsyncStorage.setItem('cname', data.clientName);
+                router.push('/home');
               } else if(data.status==0) {
                 AsyncStorage.clear();
                 //set error

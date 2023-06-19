@@ -2,19 +2,18 @@ import {Stack, useRouter, useGlobalSearchParams} from "expo-router";
 import { useCallback, useState, useEffect } from "react";
 import{Text,ScrollView,SafeAreaView,ActivityIndicator,RefreshControl, StyleSheet,Image} from "react-native";
 import {FONT,COLOR,SIZE,images,icons,KEY} from "../../constants";
-import Invoice from "../../components/Invoice";
+import Receipt from "../../components/Receipt";
 
 import React from 'react';
 const key = KEY;
 
-const InvoiceDetail = () => {
+const PaymentDetail = () => {
     const params = useGlobalSearchParams();
     const router = useRouter();
-    const invoice_id = params.id;
+    const receipt_id = params.id;
     const [refreshing, setRefreshing] = useState(false);
     const [spinner, setSpinner] = useState(false);
     const [data, setData] = useState([]);
-    
 
     const onRefresh = useCallback(()=>{
         setRefreshing(true);
@@ -30,11 +29,11 @@ const InvoiceDetail = () => {
        async function requestData() {
         setSpinner(true);   
           try {
-            await fetch('https://hansin.nezasoft.net/api/single_invoice/', {
+            await fetch('https://hansin.nezasoft.net/api/single_payment/', {
               method: 'POST',
               body: JSON.stringify({
                 //clientID: userid,
-                invoiceID: invoice_id,
+                receiptID: receipt_id,
                 AuthKey: key,
                 limit : 1,
               }),
@@ -77,7 +76,7 @@ const InvoiceDetail = () => {
     <Stack.Screen  options={{
         headerStyle: {backgroundColor: COLOR.white},
         headerShadowVisible: false,               
-        headerTitle:"Invoice Detail",
+        headerTitle:"Payment Detail",
         }}
     /> 
     <ScrollView showsVerticalScrollIndicator={false}
@@ -93,7 +92,7 @@ const InvoiceDetail = () => {
                 <Text style={{padding: 5, margin:5, fontSize:SIZE.large, color : COLOR.secondary}}>No data available</Text>
             ) : (
               data?.map((item) => { 
-                <Invoice
+                <Receipt
                  compEmail ={item.company.compEmail}
                  compLogo ={item.company.compLogo}
                  compMobile ={item.company.compMobile}
@@ -101,22 +100,19 @@ const InvoiceDetail = () => {
                  compPhy ={item.company.compPhy}
                  compVAT ={item.company.compVAT}
                  compWeb ={item.company.compWeb}
-                 clientName ={item.invoice.clientName}
-                 invStatus ={item.invoice.invStatus}
-                 invoiceID ={item.invoice.invoiceID}
-                 invoiceNO ={item.invoice.invoiceNO}
-                 prodName ={item.invoice.prodName}
-                 sysDate ={item.invoice.sysDate}
-                 valDate ={item.invoice.valDate}
-                 amount ={item.item.amount}
-                 item_desc ={item.item.item_desc}
-                 qty ={item.item.qty}
-                 rate ={item.item.rate}
-                 remarks ={item.item.remarks}
-                
+                 amount = {item.receipt.amount}
+                 chqNo = {item.receipt.chqNo}
+                 clientName = {item.receipt.clientName}
+                 currDesc = {item.receipt.currDesc}
+                 invoiceNo = {item.receipt.invoiceNo}
+                 itemDesc = {item.receipt.itemDesc}
+                 payMode = {item.receipt.payMode}
+                 prodName = {item.receipt.prodName}
+                 receiptID = {item.receipt.receiptID}
+                 refNo = {item.receipt.refNo}
+                 sysDate = {item.receipt.sysDate}
+                 valDate = {item.receipt.valDate}                    
                 />
-
-
               })
                 
             )}
@@ -130,4 +126,4 @@ styles = StyleSheet.create({
  
 
 });
-export default InvoiceDetail
+export default PaymentDetail

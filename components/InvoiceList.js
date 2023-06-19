@@ -6,12 +6,17 @@ const InvoiceList = ({item, selectedInvoice, viewInvoice}) => {
   let invStatus = item?.invStatus;
   return (
     <TouchableOpacity style={styles.container(selectedInvoice,item)} onPress={()=> viewInvoice(item)}>
+     <View style={{flexDirection :"row",  justifyContent:"space-between", }}>
+      <View>
             <TouchableOpacity>
                 <Image source={icons.invoices} 
                 resizeMode='contain'
                 style={styles.iconSize}
                 />
             </TouchableOpacity>
+      </View>
+      <View>
+            
             <Text style={styles.itemName(selectedInvoice, item)} numberOfLines={1}>
                 {item.prodName}
             </Text>
@@ -23,29 +28,30 @@ const InvoiceList = ({item, selectedInvoice, viewInvoice}) => {
 
             <View style={styles.infoWrapper}>
                 <Text style={styles.valid_date(selectedInvoice, item)}> Bill Date: {item.sysDate}</Text>
-                <Text style={styles.valid_date(selectedInvoice, item)} >Valid Date :  {item?.valDate} </Text>
+                <Text style={styles.valid_date(selectedInvoice, item)}>Valid Date :  {item?.valDate} </Text>
                 {invStatus === 'Paid' ? (
                   <Text style={styles.green_pill} > {item?.invStatus} </Text>
                 ) : (
                   <Text style={styles.red_pill} >  {item?.invStatus} </Text>
                 )}               
             </View>
-
+      </View>      
+  </View>
         </TouchableOpacity>
   )
 }
 const styles = StyleSheet.create({
 
       iconSize : {
-        height:30,
-        width:30,
+        height:70,
+        width:70,
     },
     container: (selectedInvoice, item) => ({
       width: "98%",
       padding: 5,
       margin : 5,
       backgroundColor: selectedInvoice === item.invoiceID ? COLOR.primary : "#FFF",
-      borderRadius: SIZE.medium,
+      borderRadius: 8,
       justifyContent: "space-between",
       shadowColor: COLOR.primary,
 

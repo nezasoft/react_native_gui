@@ -4,6 +4,7 @@ import {FONT,COLOR,SIZE,images,icons} from "../constants";
 import {Stack, useRouter} from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as SplashScreen from "expo-splash-screen";
+import HomeInvoiceList from "../components/HomeInvoiceList";
 
 
 SplashScreen.preventAutoHideAsync();
@@ -12,10 +13,8 @@ SplashScreen.preventAutoHideAsync();
 //AsyncStorage.clear();
 
 const Home = () =>{
-
-
     const [userid, setUserId] = useState('');
-    const [fname, setFName] = useState('');
+    const [cname, setClientName] = useState('');
     const router = useRouter();
     readUserData();
     const displayMenu = () =>{
@@ -25,18 +24,18 @@ const Home = () =>{
         router.push('/profile');
     };
 
-  /*if(userid===null){
+  if(userid===null){
         router.push('/signin');
     }
-*/
+
     async function readUserData(){
         try{
            const userid = await AsyncStorage.getItem('userID');
-           const fname = await AsyncStorage.getItem('fname');
+           const cname = await AsyncStorage.getItem('cname');
     
            if(userid!==null){               
            setUserId(userid);
-           setFName(fname);   
+           setClientName(cname);   
            }else{
                 //alert("Error occured fetching your data!");
                 //redirect user to signin 
@@ -70,59 +69,24 @@ const Home = () =>{
                 headerTitle:"Home",
                 }}
             />
+
             
             <View style={{backgroundColor: COLOR.secondary, height:"10%"}}>
             <ImageBackground source={images.pic1} style={{height:"100%"}}>
-                <Text style={styles.headerText}>Hello, {`${fname}`} </Text>
+                <Text style={styles.headerText}>Hello, {`${cname}`} </Text>
                 <Text style={{color:COLOR.white, margin:3, fontSize: SIZE.medium}} >Welcome back! Its nice to see you </Text>
                 </ImageBackground>
             </View>                     
             <View>
                 <View style={{padding:5, margin: 5, backgroundColor: COLOR.secondary, alignItems:"center"}}>
-                    <Text style={{fontSize : SIZE.large, color: COLOR.white}}>Current Balance:</Text>
-                    <Text style={{fontSize : SIZE.xlarge, color: COLOR.white}}>KES 10,500.00</Text>
-                </View> 
-                 
-                    <View style={[styles.homeCardItem, styles.shadowProp]}>
-                    
-                        <Text style={styles.invoiceHeaderText}> <Image source={icons.invoices} style={{width:25, height:25}}/> Recent Invoices</Text>
-                        <Text style={{color:COLOR.secondary}}>.....................................</Text>
-                        <ScrollView horizontal={true} showsVerticalScrollIndicator={false}>
-                            <View style={{flex:1,flexDirection:"row", justifyContent:"space-between"}}>
-                                <View style={styles.invoiceCardItem}>
-                                        <Text style={{fontWeight: "bold",fontSize: SIZE.large, color: COLOR.white,marginBottom:5}}>INV 12451</Text>
-                                        <Text style={{fontWeight: "bold",fontSize: SIZE.medium, backgroundColor: COLOR.primary, color: COLOR.white,marginBottom: 5}}> 20 Mb Shared</Text>
-                                        <Text style={{color : COLOR.white,fontSize: SIZE.small}}>1st July 2023</Text>
-                                        <TouchableOpacity><Text style={styles.viewMore}>View</Text></TouchableOpacity>
-                                </View>
-                                <View style={styles.invoiceCardItem}>
-                                        <Text style={{fontWeight: "bold",fontSize: SIZE.large, color: COLOR.white,marginBottom:5}}>INV 12451</Text>
-                                        <Text style={{fontWeight: "bold",fontSize: SIZE.medium, backgroundColor: COLOR.primary, color: COLOR.white,marginBottom: 5}}> 20 Mb Shared</Text>
-                                        <Text style={{color : COLOR.white,fontSize: SIZE.small}}>1st July 2023</Text>
-                                        <TouchableOpacity><Text style={styles.viewMore}>View</Text></TouchableOpacity>
-                                </View>
-                                <View style={styles.invoiceCardItem}>
-                                        <Text style={{fontWeight: "bold",fontSize: SIZE.large, color: COLOR.white,marginBottom:5}}>INV 12451</Text>
-                                        <Text style={{fontWeight: "bold",fontSize: SIZE.medium, backgroundColor: COLOR.primary, color: COLOR.white,marginBottom: 5}}> 20 Mb Shared</Text>
-                                        <Text style={{color : COLOR.white,fontSize: SIZE.small}}>1st July 2023</Text>
-                                        <TouchableOpacity><Text style={styles.viewMore}>View</Text></TouchableOpacity>
-                                </View>
-                                <View style={styles.invoiceCardItem}>
-                                        <Text style={{fontWeight: "bold",fontSize: SIZE.large, color: COLOR.white,marginBottom:5}}>INV 12451</Text>
-                                        <Text style={{fontWeight: "bold",fontSize: SIZE.medium, backgroundColor: COLOR.primary, color: COLOR.white,marginBottom: 5}}> 20 Mb Shared</Text>
-                                        <Text style={{color : COLOR.white,fontSize: SIZE.small}}>1st July 2023</Text>
-                                        <TouchableOpacity><Text style={styles.viewMore}>View</Text></TouchableOpacity>
-                                </View>
-                             
-                                
-                          
-
-                            </View>
-
-                        </ScrollView>
-                        <View><Text style={{ textAlign :"center", width:"40%", backgroundColor: COLOR.secondary,color: COLOR.white, borderRadius: 20, padding:5, margin: 5}}>View All Invoices  </Text></View>
-                     
-                    </View>
+                    <Text style={{fontSize : SIZE.small, color: COLOR.white}}>Current Balance:</Text>
+                    <Text style={{fontSize : SIZE.large, color: COLOR.white}}>KES 10,500.00</Text>
+                </View>
+                <View style={{margin:5,padding:5, borderColor: "#2e3192"}}>
+                    <HomeInvoiceList /> 
+                </View>
+                
+        
                 
                     <View style={[styles.homeCardItem, styles.shadowProp]}>
                   
