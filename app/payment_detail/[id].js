@@ -1,4 +1,4 @@
-import {Stack, useRouter, useGlobalSearchParams} from "expo-router";
+import {Stack,  useGlobalSearchParams} from "expo-router";
 import { useCallback, useState, useEffect } from "react";
 import{Text,ScrollView,SafeAreaView,ActivityIndicator,RefreshControl, StyleSheet,Image} from "react-native";
 import {FONT,COLOR,SIZE,images,icons,KEY} from "../../constants";
@@ -9,16 +9,18 @@ const key = KEY;
 
 const PaymentDetail = () => {
     const params = useGlobalSearchParams();
-    const router = useRouter();
     const receipt_id = params.id;
     const [refreshing, setRefreshing] = useState(false);
     const [spinner, setSpinner] = useState(false);
     const [data, setData] = useState([]);
+    const [nodata, setNoData] = useState(false);
 
     const onRefresh = useCallback(()=>{
         setRefreshing(true);
         refetch();
-        setRefreshing(false);
+        setTimeout(() => {
+          setRefreshing(false);
+        }, 2000);
     
      },[]);
     
@@ -32,7 +34,6 @@ const PaymentDetail = () => {
             await fetch('https://hansin.nezasoft.net/api/single_payment/', {
               method: 'POST',
               body: JSON.stringify({
-                //clientID: userid,
                 receiptID: receipt_id,
                 AuthKey: key,
                 limit : 1,
@@ -46,16 +47,20 @@ const PaymentDetail = () => {
               })
               .then((data) => {
    
-               if (data) {
-                 console.log(data); 
-                  setData(data.data);
-                } else if(data?.status==0) {
-                  //set error
-                  alert("No record(s) found!");
-                 //console.log(data);
-                }else{
-                  alert("Unknown error occured!");
-                } 
+                if (data) {
+                  if(data?.status!==0){ 
+                     setData(data.data);
+                     setNoData(false); 
+                    // console.log(data);   
+                  }else{
+                    //console.log(data); 
+                     //console.log("No data returned!"); 
+                     setNoData(true);
+      
+                  }
+                 }else{
+                   alert("Unknown error occured!");
+                 } 
               })
               
             } catch (error) {
@@ -70,6 +75,7 @@ const PaymentDetail = () => {
             requestData();
            },[]);
            //console.log(data);
+           
     
   return (
     <SafeAreaView styles={{flex:1, backgroundColor: COLOR.primary}}>
@@ -88,8 +94,8 @@ const PaymentDetail = () => {
             
             spinner ? (
                 <ActivityIndicator style={{marginTop : 5}} size='large' color={COLOR.secondary} />
-            ) : data?.status==0 ? (
-                <Text style={{padding: 5, margin:5, fontSize:SIZE.large, color : COLOR.secondary}}>No data available</Text>
+            ) : nodata ? (
+                <Text style={{padding: 5, margin:5, fontSize:SIZE.small, color : COLOR.secondary}}>No data available</Text>
             ) : (
               data?.map((item) => { 
                 <Receipt

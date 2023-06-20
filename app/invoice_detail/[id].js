@@ -1,4 +1,4 @@
-import {Stack, useRouter, useGlobalSearchParams} from "expo-router";
+import {Stack, useGlobalSearchParams} from "expo-router";
 import { useCallback, useState, useEffect } from "react";
 import{Text,ScrollView,SafeAreaView,ActivityIndicator,RefreshControl, StyleSheet,Image} from "react-native";
 import {FONT,COLOR,SIZE,images,icons,KEY} from "../../constants";
@@ -9,11 +9,11 @@ const key = KEY;
 
 const InvoiceDetail = () => {
     const params = useGlobalSearchParams();
-    const router = useRouter();
     const invoice_id = params.id;
     const [refreshing, setRefreshing] = useState(false);
     const [spinner, setSpinner] = useState(false);
     const [data, setData] = useState([]);
+    const [nodata, setNoData] = useState(false);
     
 
     const onRefresh = useCallback(()=>{
@@ -27,7 +27,7 @@ const InvoiceDetail = () => {
         requestData();
        };
 
-       async function requestData() {
+       async function requestData(invoice_id) {
         setSpinner(true);   
           try {
             await fetch('https://hansin.nezasoft.net/api/single_invoice/', {
@@ -45,18 +45,21 @@ const InvoiceDetail = () => {
                 }
                 throw new Error('error')
               })
-              .then((data) => {
-   
-               if (data) {
-                 console.log(data); 
-                  setData(data.data);
-                } else if(data?.status==0) {
-                  //set error
-                  alert("No record(s) found!");
-                 //console.log(data);
-                }else{
-                  alert("Unknown error occured!");
-                } 
+              .then((data) => {   
+                if (data) {
+                  if(data?.status!==0){ 
+                     setData(data.data);
+                     setNoData(false); 
+                     //console.log(data);   
+                  }else{
+                    //console.log(data); 
+                     //console.log("No data returned!"); 
+                     setNoData(true);
+      
+                  }
+                 }else{
+                   alert("Unknown error occured!");
+                 } 
               })
               
             } catch (error) {
@@ -84,15 +87,15 @@ const InvoiceDetail = () => {
         RefreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
-        >
+        > 
             { 
             
             spinner ? (
                 <ActivityIndicator style={{marginTop : 5}} size='large' color={COLOR.secondary} />
-            ) : data?.status==0 ? (
-                <Text style={{padding: 5, margin:5, fontSize:SIZE.large, color : COLOR.secondary}}>No data available</Text>
+            ) : nodata ? (
+                <Text style={{padding: 5, margin:5, fontSize:SIZE.small, color : COLOR.secondary}}>No data available</Text>
             ) : (
-              data?.map((item) => { 
+              data?.map((item) => {  
                 <Invoice
                  compEmail ={item.company.compEmail}
                  compLogo ={item.company.compLogo}

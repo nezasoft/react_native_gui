@@ -3,21 +3,20 @@ import { useRouter } from "expo-router";
 import { View,Text,TouchableOpacity,FlatList,ActivityIndicator, StyleSheet} from "react-native";
 import {FONT,COLOR,SIZE,KEY,images,icons} from "../constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import InvoiceHomeCard from "../components/cards/InvoiceHomeCard";
-
+import InvoiceHomeCard from "../components/cards/ReceiptHomeCard";
 const key = KEY;
-const HomeInvoiceList = () => {
+const HomeReceiptList = () => {
     const [spinner, setSpinner] = useState(false);
     const [data, setData] = useState([]); 
     const [error, setError] = useState(null);
     const [nodata, setNoData] = useState(false);
     const router = useRouter();
-   
+
   async function requestData() {
     setSpinner(true);   
       try {
         const userid = await AsyncStorage.getItem('userID');
-        await fetch('https://hansin.nezasoft.net/api/all_invoices/', {
+        await fetch('https://hansin.nezasoft.net/api/all_payments/', {
           method: 'POST',
           body: JSON.stringify({
             clientID: userid,
@@ -39,7 +38,7 @@ const HomeInvoiceList = () => {
              if(data?.status!==0){ 
                 setData(data.data);
                 setNoData(false);
-                //console.log(data); 
+               //console.log(data); 
              }else{
                // console.log(data); 
                 //console.log("No data returned!"); 
@@ -62,17 +61,17 @@ const HomeInvoiceList = () => {
       requestData();
      },[]);
 
-     const [selectedInvoice, setSelectedInvoice] = useState();
+     const [selectedReceipt, setSelectedReceipt] = useState();
 
-     const viewInvoice = (item) => {
-       router.push(`/invoice_detail/${item.invoiceID}`);
-       setSelectedInvoice(item.invoiceID);
+     const viewReceipt = (item) => {
+       router.push(`/payment_detail/${item.invoiceID}`);
+       setSelectedReceipt(item.receiptID);
      };
 
   return (
     <View style={styles.container}>
     <View style={styles.header}>
-      <Text style={styles.headerTitle}>Recent Invoices</Text>
+      <Text style={styles.headerTitle}>Recent Payments</Text>
     </View>
 
     <View style={styles.cardsContainer}>
@@ -88,10 +87,10 @@ const HomeInvoiceList = () => {
           renderItem={({ item }) => (
             <InvoiceHomeCard
               item={item}
-              viewInvoice={viewInvoice}
+              viewReceipt={viewReceipt}
             />
           )}
-          keyExtractor={(item) => item.invoiceID}
+          keyExtractor={(item) => item.receiptID}
           contentContainerStyle={{ columnGap: SIZE.small }}
           horizontal
         />
@@ -127,4 +126,4 @@ const styles = StyleSheet.create({
     },
   });
   
-export default HomeInvoiceList
+export default HomeReceiptList

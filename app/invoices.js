@@ -1,5 +1,5 @@
-import {View, Text, SafeAreaView,FlatList, StyleSheet,Image,ActivityIndicator,ImageBackground, TouchableOpacity} from "react-native";
-import {useState,useEffect} from "react";
+import {View, Text, SafeAreaView,FlatList,RefreshControl, StyleSheet,Image,ActivityIndicator,ImageBackground, TouchableOpacity} from "react-native";
+import {useState,useEffect,useCallback} from "react";
 import {FONT,COLOR,SIZE,images,icons,KEY} from "../constants";
 import {Stack, useRouter} from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -7,37 +7,19 @@ import InvoiceList from "../components/InvoiceList";
 const key = KEY;
 const invoices = () => {
     const [spinner, setSpinner] = useState(false);
-    const [userid, setUserId] = useState('');
     const [data, setData] = useState([]);
     const [nodata, setNoData] = useState(false);
     const [error, setError] = useState(null);
     const router = useRouter();
- 
-    readUserData();
-    async function readUserData(){
-      try{
-         const userid = await AsyncStorage.getItem('userID');
-  
-         if(userid!==null){               
-         setUserId(userid);  
-         }else{
-              //alert("Error occured fetching your data!");
-              //redirect user to signin 
-              router.push('/signin');
-         }            
-      }catch(err){
-          alert(err);
-  
-      }
-  }
 
   async function requestData() {
     setSpinner(true);   
       try {
+        const userid = await AsyncStorage.getItem('userID');
         await fetch('https://hansin.nezasoft.net/api/all_invoices/', {
           method: 'POST',
           body: JSON.stringify({
-            clientID: userid,
+           clientID: userid,
             //clientID: 111,
             AuthKey: key,
             limit : 1000,
@@ -112,7 +94,7 @@ const invoices = () => {
                      <ActivityIndicator style={{marginTop:"20%"}} animating = {spinner} size="large" color="#ffffff"   /> 
                       
                   ): nodata ? (  
-                      <Text style={{padding: 5, margin:5, fontSize:SIZE.large, color : COLOR.white}}>No data available at the moment. Please refresh!</Text>
+                      <Text style={{padding: 5, margin:5, fontSize:SIZE.small, color : COLOR.white}}>No data available at the moment. Please refresh!</Text>
                  ) : ( 
                   
                   <FlatList
@@ -181,6 +163,7 @@ viewMore : {
   fontSize : SIZE.medium,
   textAlign :"center",
 }
+
 
 });
 export default invoices

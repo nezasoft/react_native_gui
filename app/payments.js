@@ -8,34 +8,15 @@ import PaymentList from "../components/PaymentList";
 const key = KEY;
 const payments = () => {
     const [spinner, setSpinner] = useState(false);
-    const [userid, setUserId] = useState('');
     const [data, setData] = useState([]);
     const [nodata, setNoData] = useState(false);
     const [error, setError] = useState(null);
     const router = useRouter();
 
-
-     readUserData();
-     async function readUserData(){
-      try{
-         const userid = await AsyncStorage.getItem('userID');
-  
-         if(userid!==null){               
-         setUserId(userid);  
-         }else{
-              //alert("Error occured fetching your data!");
-              //redirect user to signin 
-              router.push('/signin');
-         }            
-      }catch(err){
-          alert(err);
-  
-      }
-  }
-
   async function requestData() {
     setSpinner(true);   
       try {
+        const userid = await AsyncStorage.getItem('userID');
         await fetch('https://hansin.nezasoft.net/api/all_payments/', {
           method: 'POST',
           body: JSON.stringify({
@@ -113,7 +94,7 @@ const payments = () => {
                      <ActivityIndicator style={{marginTop:"20%"}} animating = {spinner} size="large" color="#ffffff"   /> 
                       
                 ): nodata ? (  
-                      <Text style={{padding: 5, margin:5, fontSize:SIZE.large, color : COLOR.secondary}}>No data available at the moment. Please refresh!</Text>
+                      <Text style={{padding: 5, margin:5, fontSize:SIZE.small, color : COLOR.white}}>No data available at the moment. Please refresh!</Text>
                 ) : ( 
                   
                   <FlatList

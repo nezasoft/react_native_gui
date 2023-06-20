@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
       justifyContent: "space-between",
       alignItems: "center",
       flexDirection: "row",
-      padding: SIZE.medium,
+      padding: SIZE.small,
       borderRadius: SIZE.small,
       backgroundColor: "#FFF",
       shadowColor: COLOR.white,
@@ -49,15 +49,15 @@ const styles = StyleSheet.create({
     },
     textContainer: {
       flex: 1,
-      marginHorizontal: SIZE.medium,
+      marginHorizontal: SIZE.small,
     },
     jobName: {
-      fontSize: SIZE.medium,
+      fontSize: SIZE.small,
       fontFamily: FONT.Regular,
       color: COLOR.primary,
     },
     jobType: {
-      fontSize: SIZE.small + 2,
+      fontSize: SIZE.xsmall,
       fontFamily: FONT.Regular,
       color: COLOR.gray,
       marginTop: 3,

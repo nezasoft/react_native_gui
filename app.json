@@ -5,9 +5,8 @@
     "icon": "./assets/images/icon.png",
     "splash": {
       "image": "./assets/images/logo.png",
-      "backgroundColor": "#2e3192",
+      "backgroundColor": "#ffffff",
       "resizeMode" : "contain"
-
     },
     "web": {
       "bundler": "metro"

@@ -1,22 +1,34 @@
-import { useState, useEffect } from "react";
-import { useRouter } from "expo-router";
-import { View,Text,TouchableOpacity,FlatList,ActivityIndicator, StyleSheet} from "react-native";
+import React,{useEffect} from 'react';
+import {View,Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {FONT,COLOR,SIZE,KEY,images,icons} from "../constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import InvoiceHomeCard from "../components/cards/InvoiceHomeCard";
 
-const key = KEY;
-const HomeInvoiceList = () => {
-    const [spinner, setSpinner] = useState(false);
-    const [data, setData] = useState([]); 
-    const [error, setError] = useState(null);
-    const [nodata, setNoData] = useState(false);
-    const router = useRouter();
-   
+const HomeServiceProfile = () => {
+
+    async function readUserData(){
+        try{
+           const userid = await AsyncStorage.getItem('userID');
+           const cname = await AsyncStorage.getItem('cname');
+    
+           if(userid!==null){               
+           setUserId(userid);
+           setClientName(cname);   
+           }else{
+                //alert("Error occured fetching your data!");
+                //redirect user to signin 
+                router.push('/signin');
+           }           
+    
+        }catch(err){
+            alert(err);
+    
+        }
+    }
+
+
   async function requestData() {
     setSpinner(true);   
       try {
-        const userid = await AsyncStorage.getItem('userID');
         await fetch('https://hansin.nezasoft.net/api/all_invoices/', {
           method: 'POST',
           body: JSON.stringify({
@@ -62,44 +74,26 @@ const HomeInvoiceList = () => {
       requestData();
      },[]);
 
-     const [selectedInvoice, setSelectedInvoice] = useState();
-
-     const viewInvoice = (item) => {
-       router.push(`/invoice_detail/${item.invoiceID}`);
-       setSelectedInvoice(item.invoiceID);
-     };
-
   return (
-    <View style={styles.container}>
-    <View style={styles.header}>
-      <Text style={styles.headerTitle}>Recent Invoices</Text>
-    </View>
+    <>
+     <View style={styles.container}>
+        <View style={styles.header}>
+        <Text style={styles.headerTitle}>user Profile</Text>
+        <TouchableOpacity onPress={requestData}>
+            <Text style={styles.headerBtn}>Refresh</Text>
+        </TouchableOpacity>
+        </View>
 
-    <View style={styles.cardsContainer}>
-          
-      {spinner ? (
-         <ActivityIndicator animating = {spinner} size="large" color="#2e3192"   /> 
-
-      ): nodata ? (  
-        <Text style={{padding: 5, margin:5, fontSize:SIZE.small, color : COLOR.secondary}}>No data available at the moment. Please refresh!</Text>
-      ) : ( 
-        <FlatList
-          data={data}
-          renderItem={({ item }) => (
-            <InvoiceHomeCard
-              item={item}
-              viewInvoice={viewInvoice}
-            />
-          )}
-          keyExtractor={(item) => item.invoiceID}
-          contentContainerStyle={{ columnGap: SIZE.small }}
-          horizontal
-        />
-      )}
+    <View style={{backgroundColor: COLOR.primary, margin:5, padding:5,borderRadius:5}}>
+        <Text>Home User Profile</Text>
     </View>
-  </View>
+</View>
+    
+    </>
+   
   )
 }
+
 const styles = StyleSheet.create({
     container: {
       marginTop: SIZE.xlarge,
@@ -127,4 +121,4 @@ const styles = StyleSheet.create({
     },
   });
   
-export default HomeInvoiceList
+export default HomeServiceProfile

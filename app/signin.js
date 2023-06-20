@@ -54,20 +54,17 @@ const signin = () => {
               } else if(data.status==0) {
                 AsyncStorage.clear();
                 //set error
-                alert("Wrong username / email");
+                alert("Invalid credentials!");
                //console.log(data);
               }else{
                 alert("Unknown error occured!");
               }
-            })
-            
+            })         
         } catch (error) {
           console.log(error);
         }
-
         setSpinner(false);
       }
-
      async function  storeData(data){
         try{
           await AsyncStorage.setItem('userID',data);
@@ -75,8 +72,7 @@ const signin = () => {
           console.log(err);
           alert("Error saving data");
         }
-      };
-    
+      };  
   return (
     <View  style={styles.mainContent} >  
     <Stack.Screen  options={{
@@ -85,9 +81,7 @@ const signin = () => {
         headerTitle:"",
         }}
     /> 
-   
-    <ScrollView style={{marginTop:"5%"}}>
-        
+    <ScrollView style={{marginTop:"5%"}}>      
         <View style={styles.inputForm}>
         <View style={styles.logo}>
             <Image source={images.logo} style={{width:200,height:52}}   />
