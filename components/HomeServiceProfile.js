@@ -1,45 +1,28 @@
-import React,{useEffect} from 'react';
-import {View,Text, TouchableOpacity, StyleSheet} from 'react-native';
+import React,{useEffect,useState} from 'react';
+import {View,Text, TouchableOpacity, StyleSheet,ActivityIndicator,} from 'react-native';
 import {FONT,COLOR,SIZE,KEY,images,icons} from "../constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const HomeServiceProfile = () => {
-
-    async function readUserData(){
-        try{
-           const userid = await AsyncStorage.getItem('userID');
-           const cname = await AsyncStorage.getItem('cname');
-    
-           if(userid!==null){               
-           setUserId(userid);
-           setClientName(cname);   
-           }else{
-                //alert("Error occured fetching your data!");
-                //redirect user to signin 
-                router.push('/signin');
-           }           
-    
-        }catch(err){
-            alert(err);
-    
-        }
-    }
-
+const key = KEY;
+const HomeUserProfile = () => {
+    const [spinner, setSpinner] = useState(false);
+    const [data, setData] = useState([]); 
+    const [error, setError] = useState(null);
+    const [nodata, setNoData] = useState(false);
 
   async function requestData() {
     setSpinner(true);   
       try {
-        await fetch('https://hansin.nezasoft.net/api/all_invoices/', {
+        const userid = await AsyncStorage.getItem('userID');
+        await fetch('https://hansin.nezasoft.net/api/user_profile/', {
           method: 'POST',
           body: JSON.stringify({
             clientID: userid,
-            //clientID: 111,
             AuthKey: key,
-            limit : 4,
           }),
         })
           .then((respose) => {
-            if (respose.ok) {
+            if (respose.ok) { 
               return respose.json()
             }
             throw new Error('error')
@@ -49,11 +32,11 @@ const HomeServiceProfile = () => {
            if (data) {
 
              if(data?.status!==0){ 
-                setData(data.data);
+                setData(data);
                 setNoData(false);
                 //console.log(data); 
              }else{
-               // console.log(data); 
+               console.log(data); 
                 //console.log("No data returned!"); 
                 setNoData(true);
              }
@@ -78,25 +61,53 @@ const HomeServiceProfile = () => {
     <>
      <View style={styles.container}>
         <View style={styles.header}>
-        <Text style={styles.headerTitle}>user Profile</Text>
-        <TouchableOpacity onPress={requestData}>
-            <Text style={styles.headerBtn}>Refresh</Text>
-        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Service Profile</Text>
         </View>
-
-    <View style={{backgroundColor: COLOR.primary, margin:5, padding:5,borderRadius:5}}>
-        <Text>Home User Profile</Text>
+        {spinner ? (
+                     <ActivityIndicator style={{marginTop:"20%"}} animating = {spinner} size="large" color="#2e3192"   />              
+        ): nodata ? (  
+                      <Text style={{padding: 5, margin:5, fontSize:SIZE.small, color : COLOR.secondary}}>No data available at the moment. Please refresh!</Text>
+        ) : ( 
+    <View style={{justifyContent: "space-between",flexDirection:"row",backgroundColor: COLOR.primary, margin:5, padding:5,borderRadius:10,marginBottom:50}}>
+        <View>
+            <Text style={styles.profileText}>Account Name: </Text>
+            <Text style={styles.profileText}>Email: </Text>
+            <Text style={styles.profileText}>Mobile : </Text>
+            <Text style={styles.profileText}>Tel. No: </Text>
+            <Text style={styles.profileText}>Street: </Text>
+        </View>
+        <View>
+            <Text style={styles.profileTextPill}>{data?.clientName} </Text>
+            <Text style={styles.profileTextPill}>{data?.Email}</Text>
+            <Text style={styles.profileTextPill}>{data?.mobileNo}</Text>
+            <Text style={styles.profileTextPill}>{data?.telNo}</Text>
+            <Text style={styles.profileTextPill}>{data?.street}</Text>
+        </View>
+        <View>
+            <Text style={styles.profileText}>Service: </Text>
+            <Text style={styles.profileText}>Username: </Text>
+            <Text style={styles.profileText}>Acc. No: </Text>
+            <Text style={styles.profileText}>Acc. Active: </Text>
+            <Text style={styles.profileText}>Active Since: </Text>
+        </View> 
+        <View>
+            <Text style={styles.profileTextPill}>{data?.prodName} </Text>
+            <Text style={styles.profileTextPill}>{data?.Username} </Text>
+            <Text style={styles.profileTextPill}>{data?.accNo}</Text>
+            <Text style={styles.profileTextPill}>{data?.accStatus}</Text>
+            <Text style={styles.profileTextPill}>{data?.activeSince}</Text>
+        </View>   
     </View>
-</View>
-    
-    </>
-   
+    )}
+</View>   
+    </> 
   )
 }
 
 const styles = StyleSheet.create({
     container: {
-      marginTop: SIZE.xlarge,
+      marginTop: 8,
+      marginBottom: 5,
     },
     header: {
       flexDirection: "row",
@@ -119,6 +130,22 @@ const styles = StyleSheet.create({
     cardsContainer: {
       marginTop: SIZE.medium,
     },
+    profileText:{
+        fontSize:SIZE.xsmall,
+        fontFamily: FONT.Regular,
+        margin:1,
+        padding:1
+    },
+    profileTextPill:{
+        fontSize:SIZE.xsmall,
+        fontFamily: FONT.Regular,
+        textAlign:"center",
+        borderRadius:10, 
+        backgroundColor:COLOR.secondary,
+         color:COLOR.white,
+         padding: 1,
+         margin: 1,
+    }
   });
   
-export default HomeServiceProfile
+export default HomeUserProfile

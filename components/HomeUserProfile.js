@@ -1,5 +1,4 @@
 import React,{useEffect,useState} from 'react';
-import { useRouter } from "expo-router";
 import {View,Text, TouchableOpacity, StyleSheet,ActivityIndicator,} from 'react-native';
 import {FONT,COLOR,SIZE,KEY,images,icons} from "../constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -10,7 +9,6 @@ const HomeUserProfile = () => {
     const [data, setData] = useState([]); 
     const [error, setError] = useState(null);
     const [nodata, setNoData] = useState(false);
-    const router = useRouter();
 
   async function requestData() {
     setSpinner(true);   
@@ -36,7 +34,7 @@ const HomeUserProfile = () => {
              if(data?.status!==0){ 
                 setData(data);
                 setNoData(false);
-                console.log(data); 
+                //console.log(data); 
              }else{
                console.log(data); 
                 //console.log("No data returned!"); 
@@ -98,13 +96,7 @@ const HomeUserProfile = () => {
             <Text style={styles.profileTextPill}>{data?.accNo}</Text>
             <Text style={styles.profileTextPill}>{data?.accStatus}</Text>
             <Text style={styles.profileTextPill}>{data?.activeSince}</Text>
-        </View>
-       
-       
-        
-        
-        
-        
+        </View>     
     </View>
     )}
 </View>
@@ -116,8 +108,7 @@ const HomeUserProfile = () => {
 
 const styles = StyleSheet.create({
     container: {
-      marginTop: SIZE.xlarge,
-      height: 300,
+      marginTop: 8,
       marginBottom: 5,
     },
     header: {

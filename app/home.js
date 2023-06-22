@@ -1,12 +1,15 @@
-import {View, Text, SafeAreaView,ScrollView, StyleSheet,Image,ImageBackground, TouchableOpacity} from "react-native";
+import {View, Text, SafeAreaView,ScrollView, StyleSheet,Image,ImageBackground,Pressable, TouchableOpacity} from "react-native";
 import {useState} from "react";
 import {FONT,COLOR,SIZE,images,icons} from "../constants";
 import {Stack, useRouter} from "expo-router";
+import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as SplashScreen from "expo-splash-screen";
 import HomeInvoiceList from "../components/HomeInvoiceList";
 import HomeReceiptList from "../components/HomeReceiptList";
 import HomeUserProfile from "../components/HomeUserProfile";
+import HomeServiceProfile from "../components/HomeServiceProfile";
 import AccountBalance from "../components/AccountBalance";
 
 
@@ -52,22 +55,25 @@ const Home = () =>{
         }
     }
 
+  
+
     return(
+    <>
         <SafeAreaView styles={{flex:1, backgroundColor: COLOR.primary}}>           
             <Stack.Screen  options={{
                 headerStyle: {backgroundColor: COLOR.white},
                 headerShadowVisible: false,
                 headerLeft: () => (
-                    <TouchableOpacity style={styles.menuBtnLeft} onPress={displayMenu}>
+                    <Pressable onPress={() => navigation.openDrawer()} style={styles.menuBtnLeft}>
                       <Text><Image  style={{width:25, height:25}} source={icons.stack} /></Text>  
-                    </TouchableOpacity>
+                    </Pressable>
                 ),
                 headerRight: () =>(
-                    <TouchableOpacity style={styles.menuBtnRight} onPress={displayProfile}>
+                    <Pressable style={styles.menuBtnRight} onPress={displayProfile}>
                         <Text>
                          <Image  style={{width:25, height:25}} source={icons.profile} />
                          </Text>
-                    </TouchableOpacity>
+                    </Pressable>
                 ),
                 headerTitle:"Home",
                 }}
@@ -84,7 +90,8 @@ const Home = () =>{
                 <View style={{margin:5,padding:5, borderColor: "#2e3192"}}>
                     <HomeInvoiceList /> 
                     <HomeReceiptList />
-                    <HomeUserProfile />   
+                    <HomeUserProfile /> 
+                    <HomeServiceProfile />   
                 </View>      
             </View>
             </ScrollView>
@@ -96,8 +103,13 @@ const Home = () =>{
                 <TouchableOpacity onPress={() => {AsyncStorage.clear(); router.push("/signin")}}  style={styles.iconStyle}><Image source={icons.logout} style={styles.iconSize}/><Text style={{fontSize:SIZE.xsmall,fontFamily: FONT.Regular}}>Logout</Text></TouchableOpacity>            
             </View>
         </SafeAreaView>
+
+    </>
     );
 };
+
+const Drawer = createDrawerNavigator();
+
 const styles = StyleSheet.create({
     headerText : {
         fontSize: SIZE.medium,
