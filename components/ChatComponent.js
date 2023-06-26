@@ -3,7 +3,7 @@ import React, { useLayoutEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 
 
-const ChatComponent = ({ item }) => {
+const ChatComponent = ({ item, viewMessage, selectedMsg }) => {
     //const navigation = useNavigation();
     const [messages, setMessages] = useState({});
 

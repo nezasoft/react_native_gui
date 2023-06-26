@@ -1,14 +1,78 @@
-import React from 'react';
-import {Stack, Router} from 'expo-router';
+import React, {useState,useEffect} from 'react';
+import {Stack, useRouter} from 'expo-router';
 import {Text, View,StyleSheet,SafeAreaView,Pressable,FlatList} from 'react-native';
 import { Feather } from "@expo/vector-icons";
-import {COLOR} from '../constants';
+import {COLOR, KEY} from '../constants';
 import ChatComponent from '../components/ChatComponent';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+const key = KEY;
 
 const chat = () => {
+    const [spinner, setSpinner] = useState(false);
+    const [data, setData] = useState([]);
+    const [nodata, setNoData] = useState(false);
+    const [selectedMsg, setSelectedMsg] = useState();
+    const [userid, setUserID] = useState('');
+    const router = useRouter();
 
-  //👇🏻 Dummy list of rooms
-  const rooms = [{}];
+    //lets get all the chat messages
+    async function requestData() {
+        setSpinner(true);   
+          try {
+            const userid = await AsyncStorage.getItem('userID');
+            await fetch('https://messenger.nezasoft.net/api/', {
+              method: 'POST',
+              body: JSON.stringify({
+               clientID: userid,
+                //clientID: 111,
+                AuthKey: key,
+                limit : 1000,
+              }),
+            })
+              .then((respose) => {
+                if (respose.ok) {
+                  return respose.json()
+                }
+                throw new Error('error')
+              })
+              .then((data) => {
+    
+                if (data) {
+    
+                  if(data?.status!==0){ 
+                     setData(data.data);
+                     setNoData(false);
+                     console.log(data); 
+                  }else{
+                    console.log(data); 
+                     //console.log("No data returned!"); 
+                     setNoData(true);
+                  }
+                 }else{
+                   alert("Unknown error occured!");
+                 }  
+              })
+              
+            } catch (error) {
+              //setError(error);
+              console.log(error);
+            }
+    
+          setSpinner(false);
+        }
+    
+        useEffect(()=>{
+          requestData();
+         },[]);
+
+    const viewMsg = (item) => {
+           router.push(`/message_detail/${item.msgID}`);
+           setSelectedMsg(item.msgID);
+    };
+    const composeMsg = () => {
+        router.push('/compose');
+    };
+
   return (
     <SafeAreaView style={styles.chatscreen}>
             <Stack.Screen  options={{
@@ -16,12 +80,12 @@ const chat = () => {
                 headerShadowVisible: false,
                 headerLeft: () => (
                   <Pressable onPress={() => console.log("Button Pressed!")}>
-                      <Feather name='arrow-left' size={16} color='#2e3192' />
+                      <Feather name='arrow-left' size={20} color='#2e3192' />
                   </Pressable>
                 ),
                 headerRight: () =>(
-                  <Pressable onPress={() => console.log("Button Pressed!")}>
-                      <Feather name='edit' size={16} color='#2e3192' />
+                  <Pressable onPress={composeMsg}>
+                      <Feather name='edit' size={20} color='#2e3192' />
                   </Pressable>
                 ),
                 headerTitle:"Chats",
@@ -29,16 +93,22 @@ const chat = () => {
             />
 
             <View style={styles.chatlistContainer}>
-                {rooms.length > 0 ? (
+                {data.length > 0 ? (
                     <FlatList
-                        data={rooms}
-                        renderItem={({ item }) => <ChatComponent item={item} />}
+                        data={data}
+                        renderItem={({ item }) => 
+                        <ChatComponent 
+                        item={item} 
+                        selectedMsg = {selectedMsg}
+                        viewMsg = {viewMsg}
+                        />
+                    }
                         keyExtractor={(item) => item.id}
                     />
                 ) : (
                     <View style={styles.chatemptyContainer}>
-                        <Text style={styles.chatemptyText}>No rooms created!</Text>
-                        <Text>Click the icon above to create a Chat room</Text>
+                        <Text style={styles.chatemptyText}>No messages!</Text>
+                        <Text>Click the icon above to compose message!</Text>
                     </View>
                 )}
             </View>

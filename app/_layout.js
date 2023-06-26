@@ -22,7 +22,7 @@ const Layout = () => {
  SplashScreen.hideAsync();
 
  return (
-    <Stack initialRouteName="signin">
+    <Stack initialRouteName="home">
         <Stack.Screen name="home" />
         <Stack.Screen name="profile" />
         <Stack.Screen name="signin" />
@@ -31,6 +31,7 @@ const Layout = () => {
         <Stack.Screen name="chat" />
         <Stack.Screen name="invoices" />
         <Stack.Screen name="payments" />
+        <Stack.Screen name="compose" />
     </Stack>
     
     
