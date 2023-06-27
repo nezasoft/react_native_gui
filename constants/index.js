@@ -7,6 +7,7 @@ const COLOR = {
     secondary: "#2e3192",
     white: "#ffffff",
     grey: "#68676E",
+    background: "#DEDEEF",
 };
 
 const FONT = {

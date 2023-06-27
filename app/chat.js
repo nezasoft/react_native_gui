@@ -1,8 +1,8 @@
 import React, {useState,useEffect} from 'react';
 import {Stack, useRouter} from 'expo-router';
-import {Text, View,StyleSheet,SafeAreaView,Pressable,FlatList} from 'react-native';
+import {Text, View,StyleSheet,SafeAreaView,Pressable,FlatList, ActivityIndicator} from 'react-native';
 import { Feather } from "@expo/vector-icons";
-import {COLOR, KEY} from '../constants';
+import {COLOR,FONT, KEY,SIZE, images} from '../constants';
 import ChatComponent from '../components/ChatComponent';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 const key = KEY;
@@ -42,9 +42,9 @@ const chat = () => {
                   if(data?.status!==0){ 
                      setData(data.data);
                      setNoData(false);
-                     console.log(data); 
+                     //console.log(data); 
                   }else{
-                    console.log(data); 
+                    //console.log(data); 
                      //console.log("No data returned!"); 
                      setNoData(true);
                   }
@@ -65,10 +65,7 @@ const chat = () => {
           requestData();
          },[]);
 
-    const viewMsg = (item) => {
-           router.push(`/message_detail/${item.msgID}`);
-           setSelectedMsg(item.msgID);
-    };
+
     const composeMsg = () => {
         router.push('/compose');
     };
@@ -78,40 +75,35 @@ const chat = () => {
             <Stack.Screen  options={{
                 headerStyle: {backgroundColor: COLOR.white},
                 headerShadowVisible: false,
-                headerLeft: () => (
-                  <Pressable onPress={() => console.log("Button Pressed!")}>
-                      <Feather name='arrow-left' size={20} color='#2e3192' />
-                  </Pressable>
-                ),
                 headerRight: () =>(
                   <Pressable onPress={composeMsg}>
                       <Feather name='edit' size={20} color='#2e3192' />
                   </Pressable>
                 ),
-                headerTitle:"Chats",
+                headerTitle:"Messages",
                 }}
             />
-
             <View style={styles.chatlistContainer}>
-                {data.length > 0 ? (
-                    <FlatList
-                        data={data}
-                        renderItem={({ item }) => 
-                        <ChatComponent 
-                        item={item} 
-                        selectedMsg = {selectedMsg}
-                        viewMsg = {viewMsg}
-                        />
-                    }
-                        keyExtractor={(item) => item.id}
-                    />
-                ) : (
-                    <View style={styles.chatemptyContainer}>
-                        <Text style={styles.chatemptyText}>No messages!</Text>
-                        <Text>Click the icon above to compose message!</Text>
-                    </View>
-                )}
-            </View>
+            {spinner ? (
+                     <ActivityIndicator style={{marginTop:"20%"}} animating = {spinner} size="large" color={COLOR.primary}  /> 
+            ): nodata ? (  
+                <View style={styles.chatemptyContainer}>
+                <Text style={styles.chatemptyText}>No messages!</Text>
+                <Text style={{fontSize:SIZE.small, fontFamily: FONT.Medium, color: COLOR.white}}>Click the icon above to compose message!</Text>
+               </View>
+             ) : ( 
+                    
+                <FlatList
+                data={data}
+                renderItem={({ item }) => 
+                <ChatComponent 
+                item={item} 
+                />
+            }
+                keyExtractor={(item) => item.itemID}
+            />
+            )}          
+            </View>    
         </SafeAreaView>
   )
 }
@@ -120,7 +112,7 @@ export default chat
 
 const styles = StyleSheet.create({
   chatscreen: {
-    backgroundColor: "#F7F7F7",
+    backgroundColor: COLOR.background,
     flex: 1,
     padding: 10,
     position: "relative",
@@ -149,11 +141,16 @@ chatlistContainer: {
 },
 chatemptyContainer: {
     width: "100%",
-    height: "80%",
+    height: "40%",
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: COLOR.secondary,
+    borderColor: COLOR.white,
+    borderWidth: 1,
+    borderRadius: 20,
+    marginTop: "50%",
 },
-chatemptyText: { fontWeight: "bold", fontSize: 24, paddingBottom: 30 },
+chatemptyText: {color: COLOR.white, fontFamily:FONT.Medium,  fontWeight: "bold", fontSize: 24, paddingBottom: 10 },
 messagingscreen: {
     flex: 1,
 },

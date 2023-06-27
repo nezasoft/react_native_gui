@@ -59,12 +59,12 @@ const Home = () =>{
 
     return(
     <>
-        <SafeAreaView styles={{flex:1, backgroundColor: COLOR.primary}}>           
+        <SafeAreaView styles={{flex:1, backgroundColor: COLOR.white}}>           
             <Stack.Screen  options={{
                 headerStyle: {backgroundColor: COLOR.white},
                 headerShadowVisible: false,
                 headerLeft: () => (
-                    <Pressable onPress={() => navigation.openDrawer()} style={styles.menuBtnLeft}>
+                    <Pressable onPress={() => {}} style={styles.menuBtnLeft}>
                       <Text><Image  style={{width:25, height:25}} source={icons.stack} /></Text>  
                     </Pressable>
                 ),
@@ -78,7 +78,7 @@ const Home = () =>{
                 headerTitle:"Home",
                 }}
             />
-         <ScrollView showsVerticalScrollIndicator={true}>
+         <ScrollView showsVerticalScrollIndicator={true} style={{backgroundColor: COLOR.background}}>
             <View style={{backgroundColor: COLOR.secondary, height:60}}>
             <ImageBackground source={images.pic1} style={{height:"100%", width:"100%"}}>
                 <Text style={styles.headerText}>Hello, {`${cname}`} </Text>

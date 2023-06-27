@@ -70,7 +70,7 @@ const invoices = () => {
      };
 
   return (
-    <SafeAreaView styles={{flex:1, backgroundColor: COLOR.primary}}>
+    <SafeAreaView styles={{flex:1, backgroundColor: COLOR.background}}>
       <Stack.Screen  options={{
                 headerStyle: {backgroundColor: COLOR.white},
                 headerShadowVisible: false,               
@@ -78,7 +78,7 @@ const invoices = () => {
                 }}
             /> 
      
-    <View style={{backgroundColor: COLOR.secondary, height : "100%"}}>
+    <View style={{backgroundColor: COLOR.background, height : "100%"}}>
             <ImageBackground source={images.pic2} >
             <View >
                 <Text style={styles.headerText}>
@@ -91,8 +91,7 @@ const invoices = () => {
             </ImageBackground>
             <View>
                 {spinner ? (
-                     <ActivityIndicator style={{marginTop:"20%"}} animating = {spinner} size="large" color="#ffffff"   /> 
-                      
+                     <ActivityIndicator style={{marginTop:"20%"}} animating = {spinner} size="large" color={COLOR.primary}   />                      
                   ): nodata ? (  
                       <Text style={{padding: 5, margin:5, fontSize:SIZE.small, color : COLOR.white}}>No data available at the moment. Please refresh!</Text>
                  ) : ( 

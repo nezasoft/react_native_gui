@@ -64,7 +64,7 @@ const HomeUserProfile = () => {
         <Text style={styles.headerTitle}>Service Profile</Text>
         </View>
         {spinner ? (
-                     <ActivityIndicator style={{marginTop:"20%"}} animating = {spinner} size="large" color="#2e3192"   />              
+                     <ActivityIndicator style={{marginTop:"20%"}} animating = {spinner} size="large" color={COLOR.primary}    />              
         ): nodata ? (  
                       <Text style={{padding: 5, margin:5, fontSize:SIZE.small, color : COLOR.secondary}}>No data available at the moment. Please refresh!</Text>
         ) : ( 

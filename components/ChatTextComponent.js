@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, Pressable , StyleSheet,SafeAreaView} from "react-native";
-
+import {COLOR,FONT, KEY,SIZE, images} from '../constants';
 const ChatTextComponent = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -23,7 +23,7 @@ containerMain: {
 bottomView: {
   width: '100%',
   height: 50,
-  backgroundColor: '#EE5407',
+  backgroundColor: COLOR.primary,
   justifyContent: 'center',
   alignItems: 'center',
   position: 'absolute', //Here is the trick
