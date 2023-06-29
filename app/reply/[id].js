@@ -71,9 +71,6 @@ async function requestData() {
     useEffect(()=>{      
       requestData();
      },[]);
-
-
-
   return (
     <SafeAreaView style={{backgroundColor: COLOR.background, height: "100%"}}>
             {spinner ? (

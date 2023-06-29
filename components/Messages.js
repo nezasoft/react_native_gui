@@ -2,27 +2,23 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {COLOR,FONT, KEY,SIZE, images} from '../constants';
 
-const Messages = ({item}) => {
+const Messages = ({item,userid}) => {
   return (
-    <View styl={styles.mainContent}>
-        <View style={styles.messageContainer} >
-            <View >
-                <Text style={styles.textMessage}>{item.message}</Text>
-            </View>
-                
+
+    <View style={styles.mainContent}>
+        <View style={styles.messageContainer} >        
+                <Text style={styles.textMessage}>{item.message}</Text>             
                 <View style={styles.messageFooter}>
                     <Text style={styles.textSender}>{item.sFName + " " + item.lFName}</Text>
                     <Text style={styles.textTime}>{item.createdAt}</Text>
-                </View>
-                
-
+                </View>             
             </View>
     </View>
     
   )
 }
 export default Messages
-styles = StyleSheet.create({
+const styles = StyleSheet.create({
     mainContent:{
         padding: 5,
     },
