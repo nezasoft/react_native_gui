@@ -14,26 +14,21 @@ const InvoiceDetail = () => {
     const [spinner, setSpinner] = useState(false);
     const [data, setData] = useState([]);
     const [nodata, setNoData] = useState(false);
-    
-
+   
     const onRefresh = useCallback(()=>{
         setRefreshing(true);
         refetch();
-        setRefreshing(false);
-    
-     },[]);
-    
+        setRefreshing(false);   
+     },[]);   
      const refetch = () => {
         requestData();
        };
-
-       async function requestData(invoice_id) {
-        setSpinner(true);   
+       async function requestData() {
+        setSpinner(true); 
           try {
             await fetch('https://hansin.nezasoft.net/api/single_invoice/', {
               method: 'POST',
               body: JSON.stringify({
-                //clientID: userid,
                 invoiceID: invoice_id,
                 AuthKey: key,
                 limit : 1,
@@ -54,27 +49,22 @@ const InvoiceDetail = () => {
                   }else{
                     //console.log(data); 
                      //console.log("No data returned!"); 
-                     setNoData(true);
-      
+                     setNoData(true);     
                   }
                  }else{
                    alert("Unknown error occured!");
                  } 
-              })
-              
+              })             
             } catch (error) {
               //setError(error);
               console.log(error);
-            }
-    
+            }    
           setSpinner(false);
         }
-
        useEffect(()=>{
             requestData();
-           },[]);
-           //console.log(data);
-    
+           },[invoice_id]);
+           //console.log(data);   
   return (
     <SafeAreaView styles={{flex:1, backgroundColor: COLOR.primary}}>
     <Stack.Screen  options={{
@@ -94,34 +84,10 @@ const InvoiceDetail = () => {
                 <ActivityIndicator style={{marginTop : 5}} size='large' color={COLOR.secondary} />
             ) : nodata ? (
                 <Text style={{padding: 5, margin:5, fontSize:SIZE.small, color : COLOR.secondary}}>No data available</Text>
-            ) : (
-              data?.map((item) => {  
-                <Invoice
-                 compEmail ={item.company.compEmail}
-                 compLogo ={item.company.compLogo}
-                 compMobile ={item.company.compMobile}
-                 compName ={item.company.compName}
-                 compPhy ={item.company.compPhy}
-                 compVAT ={item.company.compVAT}
-                 compWeb ={item.company.compWeb}
-                 clientName ={item.invoice.clientName}
-                 invStatus ={item.invoice.invStatus}
-                 invoiceID ={item.invoice.invoiceID}
-                 invoiceNO ={item.invoice.invoiceNO}
-                 prodName ={item.invoice.prodName}
-                 sysDate ={item.invoice.sysDate}
-                 valDate ={item.invoice.valDate}
-                 amount ={item.item.amount}
-                 item_desc ={item.item.item_desc}
-                 qty ={item.item.qty}
-                 rate ={item.item.rate}
-                 remarks ={item.item.remarks}
-                
-                />
-
-
-              })
-                
+            ) : (           
+                <Invoice            
+                data={data}               
+                />                
             )}
 
         </ScrollView>
@@ -130,7 +96,6 @@ const InvoiceDetail = () => {
 }
 
 styles = StyleSheet.create({
- 
 
 });
 export default InvoiceDetail

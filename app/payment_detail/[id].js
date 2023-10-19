@@ -73,7 +73,7 @@ const PaymentDetail = () => {
 
        useEffect(()=>{
             requestData();
-           },[]);
+           },[receipt_id]);
            //console.log(data);
            
     

@@ -1,4 +1,4 @@
-import {View, Text, SafeAreaView,FlatList,RefreshControl, StyleSheet,Image,ActivityIndicator,ImageBackground, TouchableOpacity} from "react-native";
+import {View, Text, SafeAreaView,FlatList,RefreshControl, StyleSheet,Image,ActivityIndicator, TouchableOpacity} from "react-native";
 import {useState,useEffect,useCallback} from "react";
 import {FONT,COLOR,SIZE,images,icons,KEY} from "../constants";
 import {Stack, useRouter} from "expo-router";
@@ -79,7 +79,6 @@ const invoices = () => {
             /> 
      
     <View style={{backgroundColor: COLOR.background, height : "100%"}}>
-            <ImageBackground source={images.pic2} >
             <View >
                 <Text style={styles.headerText}>
                     Invoice Report
@@ -88,7 +87,6 @@ const invoices = () => {
                     <Text style={styles.viewMore}>Refresh</Text>
                 </TouchableOpacity>
             </View>
-            </ImageBackground>
             <View>
                 {spinner ? (
                      <ActivityIndicator style={{marginTop:"20%"}} animating = {spinner} size="large" color={COLOR.primary}   />                      

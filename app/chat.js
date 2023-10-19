@@ -24,7 +24,6 @@ const chat = () => {
               method: 'POST',
               body: JSON.stringify({
                clientID: userid,
-                //clientID: 111,
                 AuthKey: key,
                 limit : 1000,
               }),

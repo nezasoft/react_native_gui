@@ -3,7 +3,7 @@ import {useState} from "react";
 import {FONT,COLOR,SIZE,images,icons} from "../constants";
 import {Stack, useRouter} from "expo-router";
 import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { DrawerItemList, createDrawerNavigator } from '@react-navigation/drawer';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as SplashScreen from "expo-splash-screen";
 import HomeInvoiceList from "../components/HomeInvoiceList";
@@ -11,14 +11,12 @@ import HomeReceiptList from "../components/HomeReceiptList";
 import HomeUserProfile from "../components/HomeUserProfile";
 import HomeServiceProfile from "../components/HomeServiceProfile";
 import AccountBalance from "../components/AccountBalance";
-
-
+import {SimpleLineIcons,MaterialIcons,MaterialCommunityIcons,FontAwesome} from "@expo/vector-icons";
+ 
 
 SplashScreen.preventAutoHideAsync();
 //import Ionicons from "@expo/vector-icons/Ionicons";
-
 //AsyncStorage.clear();
-
 const Home = () =>{
     const [userid, setUserId] = useState('');
     const [cname, setClientName] = useState('');
@@ -55,11 +53,62 @@ const Home = () =>{
         }
     }
 
-  
+    function Home({ navigation }) {
+      return (
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <Text>Welcome to our Home Screen</Text>
+          <Text>Checkout screens from the tab below</Text>
+           <Pressable
+            onPress={() => navigation.openDrawer()}
+            style={{ padding: 10, marginBottom: 10, marginTop: 10 }}
+          >
+          <Text>Open Drawer</Text>
+          </Pressable>
+        </View>
+      );
+    }
+    
+    function Conference({ navigation }) {
+      return (
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <Text style={{fontSize: 20}}>Conference Details</Text>
+          <Pressable
+            onPress={() => navigation.navigate('Story')}
+            style={{ padding: 10, marginBottom: 10, marginTop: 10 }}
+          >
+          <Text>Go to Story</Text>
+          </Pressable>
+          <Pressable
+            onPress={() => navigation.openDrawer()}
+            style={{ padding: 10, marginBottom: 10, marginTop: 10 }}
+          >
+          <Text>Open Drawer</Text>
+          </Pressable>
+        </View>
+      );
+    }
+    
+    function Story({ navigation }) {
+      return (
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <Text style={{fontSize: 20}}>Our Story</Text>
+           <Pressable
+            onPress={() => navigation.navigate('Conference')}
+            style={{ padding: 10, marginBottom: 10, marginTop: 10 }}
+          >
+          <Text>Go to Conference</Text>
+          </Pressable>
+        </View>
+      );
+    }
+    const Drawer = createDrawerNavigator();
 
     return(
+      
     <>
-        <SafeAreaView styles={{flex:1, backgroundColor: COLOR.white}}>           
+    
+    <SafeAreaView styles={{flex:1, backgroundColor: COLOR.white}}> 
+
             <Stack.Screen  options={{
                 headerStyle: {backgroundColor: COLOR.white},
                 headerShadowVisible: false,
@@ -108,7 +157,7 @@ const Home = () =>{
     );
 };
 
-const Drawer = createDrawerNavigator();
+
 
 const styles = StyleSheet.create({
     headerText : {

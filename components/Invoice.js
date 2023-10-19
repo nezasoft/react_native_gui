@@ -2,43 +2,46 @@ import React from 'react';
 import{View,Text,StyleSheet,Image} from "react-native";
 import {FONT,COLOR,SIZE,images,icons} from "../constants";
 
-const Invoice = ({compLogo,compPhy,compMobile,compWeb,compName,compVAT,sysDate,valDate,invoiceNO,clientName,prodName,item_desc,remarks,rate,qty,amount}) => {
-    alert(compName);
+const Invoice = ({data}) => {
+
   return (
+    data?.map((item) => {
+      console.log(item);
+    
     <View   style={{margin:5, padding : 5, borderWidth : 1, borderRadius : 5, backgroundColor : COLOR.white}}>
     <View style={{flex :1 , flexDirection : "row",}}>
         <View style={{margin : 5, padding : 5, width : "20%"}}>
-          <Image source={`https://hansin.nezasoft.net/images/logos/${compLogo}`} />                      
+          <Image source={'https://hansin.nezasoft.net/images/logos/nerve_logo.png'} />                      
         </View>
         <View style={{margin : 5, padding : 5, width : "20%"}}>
             <Text style={{fontSize : SIZE.small, textAlign : "center", color : COLOR.primary}}>Bill Invoice</Text>
         </View>
         <View style={{margin : 5, padding : 5, width : "50%"}}>
-            <Text style={styles.companyText}>Physical Address : {compPhy} </Text>
+            <Text style={styles.companyText}>Physical Address : {item.company.compEmail} </Text>
             <Text style={styles.companyText}>Postal Address : </Text>
-            <Text style={styles.companyText}>Mobile No : {compMobile}</Text>
-            <Text style={styles.companyText}>Email Address: {compEmail} </Text>
-            <Text style={styles.companyText}>Website: {compWeb} </Text>
+            <Text style={styles.companyText}>Mobile No : {item.company.compMobile}</Text>
+            <Text style={styles.companyText}>Email Address: {item.company.compEmail} </Text>
+            <Text style={styles.companyText}>Website: {item.company.compWeb} </Text>
         </View>                                             
     </View>
 
     <View style={styles.banner}>
       <Text style={styles.contentHeader}>Invoice Details</Text>
       <View style={{marginTop: 10,marginRight : 50, textAlign : "right"}}>
-      <Text style={styles.contentInfo}>Company Name : {compName}</Text>
-      <Text style={styles.contentInfo}>VAT / PIN No :  {compVAT} </Text>
+      <Text style={styles.contentInfo}>Company Name : {item.company.compName}</Text>
+      <Text style={styles.contentInfo}>VAT / PIN No :  {item.company.compVAT} </Text>
       </View>
       <View style={{marginTop: 10,marginLeft : 50, textAlign : "right"}}>
-      <Text style={styles.contentInfo}>Bill Date : {sysDate}</Text>
-      <Text style={styles.contentInfo}>Due Date : {valDate}</Text>
-      <Text style={styles.contentInfo}>Invoice No : {invoiceNO}</Text>
+      <Text style={styles.contentInfo}>Bill Date : {item.invoice.sysDate}</Text>
+      <Text style={styles.contentInfo}>Due Date : {item.invoice.valDate}</Text>
+      <Text style={styles.contentInfo}>Invoice No : {item.invoice.invoiceNO}</Text>
       </View>
     </View>
     <View style={styles.banner}>
     <Text style={styles.contentHeader}>Customer Details</Text>
       <View style={{marginTop: 10,marginRight : 50, textAlign : "right"}}>
           <Text style={styles.contentInfo}>Client A/C : </Text>
-          <Text style={styles.contentInfo}>Client Name : {clientName}</Text>
+          <Text style={styles.contentInfo}>Client Name : {item.invoice.clientName}</Text>
           <Text style={styles.contentInfo}>Username :</Text>                          
       </View>
       <View style={{marginTop: 10,marginLeft : 50, textAlign : "right"}}>
@@ -59,12 +62,12 @@ const Invoice = ({compLogo,compPhy,compMobile,compWeb,compName,compVAT,sysDate,v
       <View><Text style={styles.billMenu}> Total (Tax Inc.) </Text></View>      
     </View>
     <View style={styles.billInfoDetail}>
-      <View><Text style={styles.billMenuItem}>{prodName} </Text></View>
-      <View><Text style={styles.billMenuItem}>{item_desc} </Text></View>
-      <View><Text style={styles.billMenuItem}>{remarks} </Text></View>
-      <View><Text style={styles.billMenuItem}>{rate} </Text></View>
-      <View><Text style={styles.billMenuItem}> {qty} </Text></View>
-      <View><Text style={styles.billMenuItem}> {amount}  </Text></View>      
+      <View><Text style={styles.billMenuItem}>{item.invoice.prodName} </Text></View>
+      <View><Text style={styles.billMenuItem}>{item.item.item_desc} </Text></View>
+      <View><Text style={styles.billMenuItem}>{item.item.remarks} </Text></View>
+      <View><Text style={styles.billMenuItem}>{item.item.rate} </Text></View>
+      <View><Text style={styles.billMenuItem}> {item.item.qty} </Text></View>
+      <View><Text style={styles.billMenuItem}> {item.item.amount}  </Text></View>      
     </View>
 
     <View style={styles.bankDetails}>
@@ -83,11 +86,12 @@ const Invoice = ({compLogo,compPhy,compMobile,compWeb,compName,compVAT,sysDate,v
         </View>                       
     </View>
 </View>
+})
   )
 }
 
 
-styles = StyleSheet.create({
+const styles = StyleSheet.create({
     contentHeader : {
      fontSize : SIZE.xsmall,
      fontWeight : "bold",
