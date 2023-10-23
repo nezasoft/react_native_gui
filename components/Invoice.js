@@ -1,9 +1,8 @@
-import React from 'react';
+import {useState} from 'react';
 import{View,Text,StyleSheet,Image} from "react-native";
 import {FONT,COLOR,SIZE,images,icons} from "../constants";
 
 const Invoice = ({data}) => {
-
   return (
     data?.map((item) => {
       console.log(item);
